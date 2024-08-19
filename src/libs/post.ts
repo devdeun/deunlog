@@ -9,7 +9,7 @@ import readingTime from 'reading-time'
 import { Post, PostMetadata } from '@/types/post'
 
 const BASE_PATH = 'src/posts'
-const POST_PATH = path.join(process.cwd(), BASE_PATH)
+const POSTS_PATH = path.join(process.cwd(), BASE_PATH)
 
 const parsePost = (postPath: string): Post => {
   const postHeader = parsePostHeader(postPath)
@@ -40,7 +40,7 @@ export const parsePostDetails = (postPath: string) => {
 }
 
 export const getPostPaths = () => {
-  const paths = sync(`${POST_PATH}/**/*.mdx`)
+  const paths = sync(`${POSTS_PATH}/**/*.mdx`)
   return paths
 }
 
@@ -48,4 +48,11 @@ export const getPostList = () => {
   const paths = getPostPaths()
   const posts = paths.map((path) => parsePost(path))
   return posts
+}
+
+export const getPostDetails = (slugs: string[]) => {
+  const filePath = `${POSTS_PATH}/${slugs.join('/')}.mdx`
+  const postDetails = parsePost(filePath)
+
+  return postDetails
 }
