@@ -1,154 +1,246 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --accent: #2337ff;
-  --accent-dark: #000d8a;
-  --black: 15, 18, 25;
-  --gray: 96, 115, 159;
-  --gray-light: 229, 233, 240;
-  --gray-dark: 34, 41, 57;
-  --gray-gradient: rgba(var(--gray-light), 50%), #fff;
-  --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-    0 16px 32px rgba(var(--gray), 33%);
+/* colors */
+@layer base {
+  :root {
+    --gray-50: #ffffff;
+    --gray-75: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #374151;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --gray-950: #121212;
+
+    --selection: hsla(201, 50%, 40%, 10%);
+    --border: 220 13% 91%;
+    --page-background: var(--gray-50);
+
+    --heading: var(--gray-900);
+    --text-body: var(--gray-800);
+    --text-second: var(--gray-700);
+    --text-disabled: var(--gray-500);
+
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+  }
+
+  .dark {
+    --gray-50: #121212;
+    --gray-75: #111827;
+    --gray-100: #1f2937;
+    --gray-200: #374151;
+    --gray-300: #374151;
+    --gray-400: #6b7280;
+    --gray-500: #9ca3af;
+    --gray-600: #d1d5db;
+    --gray-700: #e5e7eb;
+    --gray-800: #f3f4f6;
+    --gray-900: #ffffff;
+    --gray-950: #ffffff;
+
+    --selection: hsla(0, 0%, 100%, 0.077);
+    --border: 215 27.9% 16.9%;
+    --page-background: var(--gray-75);
+
+    --heading: var(--gray-900);
+    --text-body: var(--gray-800);
+    --text-second: var(--gray-600);
+    --text-disabled: var(--gray-500);
+
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+  }
 }
-@font-face {
-  font-family: 'Atkinson';
-  src: url('/fonts/atkinson-regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+
+/* variables */
+@layer base {
+  :root {
+    --xl: 1200px;
+    --lg: 1024px;
+    --md: 768px;
+    --sm: 640px;
+
+    --page-top: 128px;
+    --page-half-top: 64px;
+    --page-width: 1024px;
+    --content-width: 720px;
+    --body-margin-left: max(24px, env(safe-area-inset-left));
+    --body-margin-right: max(24px, env(safe-area-inset-right));
+  }
+
+  @media (max-width: var(--lg)) {
+    :root {
+      --page-top: 128px;
+    }
+  }
+
+  @media (max-width: var(--md)) {
+    :root {
+      --page-top: 96px;
+      --page-half-top: 48px;
+      --body-margin-left: max(16px, env(safe-area-inset-left));
+      --body-margin-right: max(16px, env(safe-area-inset-right));
+    }
+  }
 }
-@font-face {
-  font-family: 'Atkinson';
-  src: url('/fonts/atkinson-bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-body {
-  font-family: 'Atkinson', sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  background: linear-gradient(var(--gray-gradient)) no-repeat;
-  background-size: 100% 600px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  color: rgb(var(--gray-dark));
-  font-size: 20px;
-  line-height: 1.7;
-}
-main {
-  width: 720px;
-  max-width: calc(100% - 2em);
-  margin: auto;
-  padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 0 0.5rem 0;
-  color: rgb(var(--black));
-  line-height: 1.2;
-}
-h1 {
-  font-size: 3.052em;
-}
-h2 {
-  font-size: 2.441em;
-}
-h3 {
-  font-size: 1.953em;
-}
-h4 {
-  font-size: 1.563em;
-}
-h5 {
-  font-size: 1.25em;
-}
-strong,
-b {
-  font-weight: 700;
-}
-a {
-  color: var(--accent);
-}
-a:hover {
-  color: var(--accent);
-}
-p {
-  margin-bottom: 1em;
-}
-.prose p {
-  margin-bottom: 2em;
-}
-textarea {
-  width: 100%;
-  font-size: 16px;
-}
-input {
-  font-size: 16px;
-}
-table {
-  width: 100%;
-}
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-code {
-  padding: 2px 5px;
-  background-color: rgb(var(--gray-light));
-  border-radius: 2px;
-}
-pre {
-  padding: 1.5em;
-  border-radius: 8px;
-}
-pre > code {
-  all: unset;
-}
-blockquote {
-  border-left: 4px solid var(--accent);
-  padding: 0 0 0 20px;
-  margin: 0px;
-  font-size: 1.333em;
-}
-hr {
-  border: none;
-  border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
+
+/* layout */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
-    font-size: 18px;
+    @apply m-0 min-h-screen p-0;
+    @apply font-sans text-base leading-7 tracking-normal antialiased;
+    @apply bg-page text-second;
   }
-  main {
-    padding: 1em;
+
+  .container {
+    padding-right: var(--body-margin-right);
+    padding-left: var(--body-margin-left);
+  }
+
+  .container > main {
+    @apply max-w-content pt-page mx-auto;
+    min-height: calc(100vh - var(--page-half-top) * 2 - 20px);
+  }
+
+  * {
+    @apply border-border box-border;
+  }
+
+  ::selection {
+    @apply bg-selection shadow-none;
+  }
+
+  h1 {
+    @apply text-heading font-serif font-bold;
+  }
+
+  b,
+  strong {
+    @apply text-body font-bold;
+  }
+
+  em {
+    @apply text-body font-serif font-bold not-italic;
+  }
+
+  del {
+    @apply text-disabled;
+  }
+
+  mark {
+    @apply bg-selection text-body rounded-sm font-medium;
+    padding: 3px 5px;
+    margin: 0 2px;
+    border-radius: 4px;
+  }
+
+  .link,
+  .external-link,
+  .mdx a {
+    @apply text-body hover:text-heading relative inline-block break-all;
+    @apply decoration-border underline decoration-1 underline-offset-4 hover:decoration-transparent;
+    @apply duration-200 ease-in-out hover:duration-100;
+  }
+  .link::before,
+  .external-link::before,
+  .mdx a:not(.anchor)::before {
+    @apply hover:bg-selection absolute -inset-x-1 bottom-0.5 top-0 -z-10 rounded transition-colors;
+    content: '';
+  }
+  .external-link::before {
+    @apply -right-0.5;
+  }
+  .external-link::after {
+    @apply m-0 inline-block h-3.5 w-3.5;
+    content: '';
+    background: url('data:image/svg+xml;utf8,<svg color="%23464646" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"/></svg>');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .dark .external-link::after {
+    content: '';
+    background: url('data:image/svg+xml;utf8,<svg color="%23B0B0B0" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"/></svg>');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  /* scrollbar */
+  * {
+    --scrollbar-size: 16px;
+    --scrollbar-size-min: 40px;
+    --scrollbar-color: var(--gray-200);
+    scrollbar-color: var(--scrollbar-color) transparent;
+    scrollbar-width: thin; /* firefox */
+  }
+
+  ::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    min-width: var(--scrollbar-size-min);
+    min-height: var(--scrollbar-size-min);
+    background-color: var(--scrollbar-color);
+    background-clip: padding-box;
+    border: 5px solid transparent;
+    border-radius: var(--scrollbar-size);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    --scrollbar-color: var(--gray-300);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    --scrollbar-color: var(--gray-300);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-corner,
+  ::-webkit-resizer {
+    display: none;
   }
 }
 
-.sr-only {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  position: absolute !important;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-  clip: rect(1px 1px 1px 1px);
-  /* maybe deprecated but we need to support legacy browsers */
-  clip: rect(1px, 1px, 1px, 1px);
-  /* modern browsers, clip-path works inwards from each corner */
-  clip-path: inset(50%);
-  /* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-  white-space: nowrap;
+/* header blur layer */
+@layer components {
+  .blur-layer {
+    --h: min(96px, var(--page-top));
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: calc(100% + var(--body-margin-left) + var(--body-margin-right));
+    height: var(--h);
+    margin-bottom: calc(-1 * var(--h));
+    margin-left: calc(-1 * var(--body-margin-left));
+    pointer-events: none;
+    user-select: none;
+    backdrop-filter: blur(5px);
+    opacity: 0.95;
+    mask-image: linear-gradient(to bottom, #000000 25%, transparent);
+  }
+
+  .blur-layer:after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: linear-gradient(to bottom, var(--page-background), transparent);
+  }
 }
