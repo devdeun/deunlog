@@ -62,11 +62,6 @@
 /* variables */
 @layer base {
   :root {
-    --xl: 1200px;
-    --lg: 1024px;
-    --md: 768px;
-    --sm: 640px;
-
     --page-top: 128px;
     --page-half-top: 64px;
     --page-width: 1024px;
@@ -75,13 +70,7 @@
     --body-margin-right: max(24px, env(safe-area-inset-right));
   }
 
-  @media (max-width: var(--lg)) {
-    :root {
-      --page-top: 128px;
-    }
-  }
-
-  @media (max-width: var(--md)) {
+  @media (max-width: 768px) {
     :root {
       --page-top: 96px;
       --page-half-top: 48px;
@@ -105,12 +94,12 @@
     @apply bg-page text-second;
   }
 
-  .container {
+  main {
     padding-right: var(--body-margin-right);
     padding-left: var(--body-margin-left);
   }
 
-  .container > main {
+  main > .container {
     @apply max-w-content pt-page mx-auto;
     min-height: calc(100vh - var(--page-half-top) * 2 - 20px);
   }

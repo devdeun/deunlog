@@ -12,10 +12,10 @@ export default {
       mono: ['var(--font-mono)', 'monospace'],
     },
     screens: {
-      xl: { max: 'var(--xl)' },
-      lg: { max: 'var(--lg)' },
-      md: { max: 'var(--md)' },
-      sm: { max: 'var(--sm)' },
+      xl: { max: '1200px' },
+      lg: { max: '1024px' },
+      md: { max: '768px' },
+      sm: { max: '640px' },
     },
     colors: {
       gray: {
