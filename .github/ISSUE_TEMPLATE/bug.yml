@@ -1,0 +1,35 @@
+name: Bug
+description: 버그가 발생했나요?
+title: '[Bug] '
+labels: ['🐛 Bug']
+body:
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 🐞 설명
+      description: 버그에 대한 설명을 작성해 주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: bug-solution
+    attributes:
+      label: 💡 해결 방법
+      description: 해결 방법을 알고 있다면 작성해 주세요.
+    validations:
+      required: false
+  - type: textarea
+    id: bug-os
+    attributes:
+      label: 🌏 환경
+      description: 버그가 발생한 환경에 대해 작성해 주세요.
+      placeholder: |
+        OS: macOS 14.5
+    validations:
+      required: false
+  - type: textarea
+    id: bug-more
+    attributes:
+      label: 📝 메모
+      description: 더 하고 싶은 말이 있다면 작성해 주세요.
+    validations:
+      required: false

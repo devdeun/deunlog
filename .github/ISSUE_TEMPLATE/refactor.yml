@@ -1,0 +1,20 @@
+name: Refactor
+description: 리팩토링이 필요한가요?
+title: '[Refactor] '
+labels: ['🔨 Refactor']
+body:
+  - type: textarea
+    id: refactor-todo
+    attributes:
+      label: ✅ 해야 할 일
+      description: 해야 할 일에 대한 Tasks를 작성해 주세요.
+      placeholder: 최대한 세분화해서 작성! (체크박스 활용하기)
+    validations:
+      required: true
+  - type: textarea
+    id: refactor-memo
+    attributes:
+      label: 📝 메모
+      description: 더 하고 싶은 말이 있다면 작성해 주세요.
+    validations:
+      required: false
