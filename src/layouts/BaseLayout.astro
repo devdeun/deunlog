@@ -1,0 +1,26 @@
+---
+import BaseHead from '@/components/BaseHead.astro'
+import type { SEOModel } from '../types'
+import Header from '@/components/Header.astro'
+
+interface Props {
+  seo?: SEOModel
+  class?: string
+}
+
+const { seo, class: className } = Astro.props
+---
+
+<html lang="ko">
+  <head>
+    <BaseHead {...seo} />
+  </head>
+  <body>
+    <Header />
+    <main class={className}>
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+  </body>
+</html>

@@ -2,12 +2,9 @@
 import { SITE } from '@/consts'
 import '../styles/global.css'
 import BaseFonts from './BaseFonts.astro'
+import type { SEOModel } from '@/types'
 
-interface Props {
-  title: string
-  description: string
-  image?: string
-}
+interface Props extends SEOModel {}
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
