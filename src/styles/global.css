@@ -94,18 +94,19 @@
     @apply bg-page text-second;
   }
 
-  main {
+  main,
+  footer {
     padding-right: var(--body-margin-right);
     padding-left: var(--body-margin-left);
   }
 
   main > .container {
-    @apply max-w-content pt-page mx-auto;
+    @apply mx-auto max-w-content pt-page;
     min-height: calc(100vh - var(--page-half-top) * 2 - 20px);
   }
 
   * {
-    @apply border-border box-border;
+    @apply box-border border-border;
   }
 
   ::selection {
@@ -113,16 +114,16 @@
   }
 
   h1 {
-    @apply text-heading font-serif font-bold;
+    @apply font-serif font-bold text-heading;
   }
 
   b,
   strong {
-    @apply text-body font-bold;
+    @apply font-bold text-body;
   }
 
   em {
-    @apply text-body font-serif font-bold not-italic;
+    @apply font-serif font-bold not-italic text-body;
   }
 
   del {
@@ -130,7 +131,7 @@
   }
 
   mark {
-    @apply bg-selection text-body rounded-sm font-medium;
+    @apply rounded-sm bg-selection font-medium text-body;
     padding: 3px 5px;
     margin: 0 2px;
     border-radius: 4px;
@@ -139,14 +140,14 @@
   .link,
   .external-link,
   .mdx a {
-    @apply text-body hover:text-heading relative inline-block break-all;
-    @apply decoration-border underline decoration-1 underline-offset-4 hover:decoration-transparent;
+    @apply relative inline-block break-all text-body hover:text-heading;
+    @apply underline decoration-border decoration-1 underline-offset-4 hover:decoration-transparent;
     @apply duration-200 ease-in-out hover:duration-100;
   }
   .link::before,
   .external-link::before,
   .mdx a:not(.anchor)::before {
-    @apply hover:bg-selection absolute -inset-x-1 bottom-0.5 top-0 -z-10 rounded transition-colors;
+    @apply absolute -inset-x-1 bottom-0.5 top-0 -z-10 rounded transition-colors hover:bg-selection;
     content: '';
   }
   .external-link::before {
