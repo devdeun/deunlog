@@ -8,7 +8,7 @@ interface Props extends SEOModel {}
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
-const { title, description, image = SITE.IMAGE } = Astro.props
+const { title = SITE.TITLE, description = SITE.DESCRIPTION, image = SITE.IMAGE } = Astro.props
 ---
 
 <!-- Global Metadata -->
