@@ -9,7 +9,7 @@
     --gray-75: #f9fafb;
     --gray-100: #f3f4f6;
     --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
+    --gray-300: #2f3c50;
     --gray-400: #9ca3af;
     --gray-500: #6b7280;
     --gray-600: #374151;
@@ -19,7 +19,7 @@
     --gray-950: #121212;
 
     --selection: hsla(201, 50%, 40%, 10%);
-    --border: 220 13% 91%;
+    --border: hsla(0, 0%, 0%, 0.1);
     --page-background: var(--gray-50);
 
     --heading: var(--gray-900);
