@@ -62,7 +62,7 @@
 /* variables */
 @layer base {
   :root {
-    --page-top: 128px;
+    --page-top: 76px;
     --page-half-top: 64px;
     --page-width: 1024px;
     --content-width: 720px;
@@ -72,7 +72,7 @@
 
   @media (max-width: 768px) {
     :root {
-      --page-top: 96px;
+      --page-top: 60px;
       --page-half-top: 48px;
       --body-margin-left: max(16px, env(safe-area-inset-left));
       --body-margin-right: max(16px, env(safe-area-inset-right));
@@ -94,6 +94,7 @@
     @apply bg-page text-second;
   }
 
+  header,
   main,
   footer {
     padding-right: var(--body-margin-right);
