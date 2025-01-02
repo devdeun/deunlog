@@ -215,7 +215,7 @@
   display: flex;
   border-radius: 8px;
   background-color: #fcfcfc;
-  box-shadow: 0 0 0 1px #ededed;
+  box-shadow: 0 0 0 1px var(--gray-200);
   overflow: hidden;
 }
 
