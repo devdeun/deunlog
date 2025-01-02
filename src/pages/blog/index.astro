@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getCollection, type CollectionEntry } from 'astro:content'
-import FormattedDate from '../../components/FormattedDate.astro'
 import dayjs from 'dayjs'
 
 const posts: CollectionEntry<'post'>[] = (await getCollection('post')).sort(
