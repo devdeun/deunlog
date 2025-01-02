@@ -1,16 +1,23 @@
 ---
 import HeaderLink from './HeaderLink.astro'
-import { SITE } from '../consts'
+import ThemeToggle from './ui/theme-toggle'
 ---
 
 <div class="blur-layer" aria-hidden="true"></div>
 <header class="fixed left-0 right-0 top-0 z-10">
-  <nav class="container mx-auto max-w-content pt-4 md:pt-0">
-    <div class="flex items-center py-4">
-      <div class="flex gap-6">
-        <HeaderLink href="/">Home</HeaderLink>
-        <HeaderLink href="/blog">Blog</HeaderLink>
-      </div>
+  <div class="container mx-auto flex max-w-content items-center justify-between pt-4 md:pt-0">
+    <nav>
+      <ul class="flex items-center gap-6 py-4">
+        <li>
+          <HeaderLink href="/">Home</HeaderLink>
+        </li>
+        <li>
+          <HeaderLink href="/blog">Blog</HeaderLink>
+        </li>
+      </ul>
+    </nav>
+    <div>
+      <ThemeToggle client:load />
     </div>
-  </nav>
+  </div>
 </header>
