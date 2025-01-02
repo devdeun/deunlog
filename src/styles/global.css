@@ -65,7 +65,7 @@
     --page-top: 76px;
     --page-half-top: 64px;
     --page-width: 1024px;
-    --content-width: 720px;
+    --content-width: 620px;
     --body-margin-left: max(24px, env(safe-area-inset-left));
     --body-margin-right: max(24px, env(safe-area-inset-right));
   }
