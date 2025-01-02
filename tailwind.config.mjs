@@ -34,6 +34,7 @@ export default {
       transparent: 'transparent',
       selection: 'var(--selection)',
       border: 'var(--border)',
+      drag: 'var(--drag)',
     },
     extend: {
       textColor: {

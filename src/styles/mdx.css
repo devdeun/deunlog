@@ -130,7 +130,7 @@
 }
 
 .mdx > ul li::marker {
-  color: var(--gray-300);
+  color: var(--gray-700);
 }
 
 .mdx > ul li > ul {
@@ -163,7 +163,7 @@
   margin-right: var(--counter-space);
   font-feature-settings: 'tnum' 1;
   line-height: normal;
-  color: var(--gray-300);
+  color: var(--gray-700);
   text-align: right;
   letter-spacing: -0.05em;
   content: counter(basics-ol) '. ';

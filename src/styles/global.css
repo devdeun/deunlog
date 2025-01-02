@@ -18,7 +18,8 @@
     --gray-900: #1c2128;
     --gray-950: #121212;
 
-    --selection: hsla(201, 50%, 40%, 10%);
+    --selection: hsla(0, 0%, 0%, 0.045);
+    --drag: hsla(201, 50%, 40%, 10%);
     --border: hsla(0, 0%, 0%, 0.1);
     --page-background: var(--gray-50);
 
@@ -111,7 +112,7 @@
   }
 
   ::selection {
-    @apply bg-selection shadow-none;
+    @apply bg-drag shadow-none;
   }
 
   h1 {
