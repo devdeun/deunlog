@@ -1,10 +1,10 @@
 ---
 import '@/styles/mdx.css'
 import type { CollectionEntry } from 'astro:content'
-import Header from '../components/Header.astro'
 import BaseLayout from './BaseLayout.astro'
 import { generateDescription } from '@/lib/mdx'
 import dayjs from 'dayjs'
+import BasePagination from '@/components/BasePagination.astro'
 
 type Props = {
   post: CollectionEntry<'post'>
@@ -30,5 +30,9 @@ const { Content } = await post.render()
     <article data-animate data-animate-speed="fast" class="mdx mt-14">
       <Content />
     </article>
+    <footer class="px-0">
+      <hr class="mb-7 mt-4" />
+      <BasePagination {prevPost} {nextPost} />
+    </footer>
   </section>
 </BaseLayout>
