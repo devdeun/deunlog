@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import Snowman from '@/components/Snowman.astro'
 import IconLink from '@/components/ui/icon-link'
 import { EmailIcon, GithubIcon, LinkedinIcon } from '@/components/ui/icons'
 ---
@@ -7,7 +8,7 @@ import { EmailIcon, GithubIcon, LinkedinIcon } from '@/components/ui/icons'
 <BaseLayout>
   <div data-animate data-animate-speed="slow">
     <div class="my-7">안녕하세요, 프론트엔드 개발자 deun입니다.</div>
-    <div class="my-7">
+    <div class="mb-16 mt-7">
       <div data-animate class="flex gap-0.5">
         <IconLink href="mailto:devdeun@gmail.com" aria-label="이메일" target="_self">
           <EmailIcon width="1.2rem" height="1.2rem" />
@@ -24,5 +25,5 @@ import { EmailIcon, GithubIcon, LinkedinIcon } from '@/components/ui/icons'
       </div>
     </div>
   </div>
-  <img src="snowdeun.png" alt="눈사람" class="mt-15 mx-auto" />
+  <Snowman />
 </BaseLayout>

@@ -30,6 +30,7 @@ export default {
         700: 'var(--gray-700)',
         800: 'var(--gray-800)',
         900: 'var(--gray-900)',
+        950: 'var(--gray-950)',
       },
       transparent: 'transparent',
       selection: 'var(--selection)',
