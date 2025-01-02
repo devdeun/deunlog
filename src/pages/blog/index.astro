@@ -17,7 +17,7 @@ const yearList = Object.entries(
   }, {})
 ).sort((a, b) => +b[0] - +a[0])
 
-const formatDate = (date: string) => {
+const formatDate = (date: Date) => {
   return dayjs(new Date(date)).format('MM/DD')
 }
 ---
@@ -44,7 +44,9 @@ const formatDate = (date: string) => {
                           <span class="mx-1 rounded-md px-1 transition">{post.data.title}</span>
                         </div>
                         <div class="ml-auto mt-0.5 flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition">
-                          <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+                          <time datetime={String(post.data.date)}>
+                            {formatDate(post.data.date)}
+                          </time>
                         </div>
                       </div>
                     </a>
