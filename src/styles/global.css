@@ -115,7 +115,7 @@
   }
 
   h1 {
-    @apply font-serif font-bold text-heading;
+    @apply text-xl font-bold text-heading;
   }
 
   b,
