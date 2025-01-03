@@ -1,17 +1,40 @@
-// @ts-check
 import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
+import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
-
 import tailwind from '@astrojs/tailwind'
 
-import react from '@astrojs/react'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeExternalLinks from 'rehype-external-links'
 
-// https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://deunlog.vercel.app',
   integrations: [
-    mdx(),
+    mdx({
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'wrap',
+            properties: {
+              className: ['anchor'],
+            },
+          },
+        ],
+        [
+          rehypeExternalLinks,
+          {
+            properties: {
+              class: 'external-link',
+            },
+            target: '_blank',
+            rel: ['noopener noreferrer'],
+          },
+        ],
+      ],
+    }),
     sitemap(),
     tailwind({
       applyBaseStyles: false,

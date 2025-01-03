@@ -477,6 +477,8 @@ pre.astro-code code {
 
 /* rehype-autolink-headings */
 .mdx .anchor {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
 }
 
@@ -484,7 +486,6 @@ pre.astro-code code {
   display: inline-block;
   width: 15px;
   height: 15px;
-  margin-bottom: 6px;
   margin-left: 4px;
   vertical-align: middle;
   content: '';
