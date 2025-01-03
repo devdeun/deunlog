@@ -7,11 +7,40 @@ import tailwind from '@astrojs/tailwind'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeExternalLinks from 'rehype-external-links'
+import {
+  transformerMetaHighlight,
+  transformerMetaWordHighlight,
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers'
+import { transformerTwoslash } from '@shikijs/twoslash'
+import remarkBreaks from 'remark-breaks'
+
+import { transformerFragment } from './plugins/transformer-fragment'
 
 export default defineConfig({
   site: 'https://deunlog.vercel.app',
   integrations: [
     mdx({
+      syntaxHighlight: 'shiki',
+      shikiConfig: {
+        theme: 'one-light',
+        transformers: [
+          transformerTwoslash({
+            explicitTrigger: true,
+          }),
+          transformerNotationHighlight(),
+          transformerNotationDiff(),
+          transformerNotationFocus(),
+          transformerNotationErrorLevel(),
+          transformerMetaHighlight(),
+          transformerMetaWordHighlight(),
+          transformerFragment(),
+        ],
+      },
+      remarkPlugins: [remarkBreaks],
       rehypePlugins: [
         rehypeSlug,
         [

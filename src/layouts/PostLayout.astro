@@ -1,4 +1,5 @@
 ---
+import '@shikijs/twoslash/style-rich.css'
 import '@/styles/mdx.css'
 import type { CollectionEntry } from 'astro:content'
 import BaseLayout from './BaseLayout.astro'
@@ -8,6 +9,7 @@ import BasePagination from '@/components/BasePagination.astro'
 import BaseLeftAside from '@/components/BaseLeftAside.astro'
 import TableOfContent from '@/components/post/TableOfContent'
 import { GiscusComment } from '@/components/post/GiscusComment'
+import CopyCodeScript from '@/components/post/CopyCodeScript.astro'
 
 type Props = {
   post: CollectionEntry<'post'>
@@ -43,4 +45,5 @@ const { Content } = await post.render()
       <GiscusComment className="mx-auto my-half-page" client:load />
     </footer>
   </section>
+  <CopyCodeScript />
 </BaseLayout>

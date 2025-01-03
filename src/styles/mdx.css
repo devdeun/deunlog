@@ -399,8 +399,8 @@ pre.astro-code code {
 
 [data-code-fragment] span.lang {
   position: absolute;
-  top: 2px;
-  right: 8px;
+  top: 16px;
+  right: 16px;
   z-index: 2;
   font-size: 0.75rem;
   font-weight: 500;
@@ -438,7 +438,7 @@ pre.astro-code code {
 }
 
 [data-code-fragment] .copy {
-  position: fixed;
+  position: absolute;
   top: 16px;
   right: 16px;
   z-index: 3;
