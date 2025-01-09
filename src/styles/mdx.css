@@ -73,16 +73,16 @@
 }
 
 .mdx > h2 {
-  @apply text-xl;
-}
-
-.mdx > h3 {
   @apply text-lg;
 }
 
+.mdx > h3 {
+  @apply text-base;
+}
+
 .mdx > :where(h2, h3, h4) {
-  @apply mt-14;
-  font-weight: 600;
+  @apply mt-16;
+  font-weight: 500;
   color: var(--text-body);
   scroll-margin-top: 96px;
 }
@@ -295,8 +295,8 @@
 .astro-code .highlighted-word {
   position: relative;
   display: inline;
-  padding: 1px 1px;
-  margin: -1px -1px;
+  padding: 1px 2px;
+  margin: -1px 1px;
   color: var(--astro-code-color-text);
   font-size: 0.9rem;
   font-weight: 600;
