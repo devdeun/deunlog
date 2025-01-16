@@ -1,0 +1,27 @@
+---
+import Envelopment from '@/components/ui/envelopment'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getPostInfoList } from '@/lib/mdx'
+import { isValidCategory, getCategoryTitleList } from '@/lib/notes'
+
+const posts = await getPostInfoList('notes')
+
+const categoryList = [...new Set(posts.map((post) => post.category))].filter(isValidCategory)
+const categoryTitleList = getCategoryTitleList(categoryList)
+---
+
+<BaseLayout>
+  <section data-animate class="group my-14">
+    <ul class="grid grid-cols-3 gap-4 sm:grid-cols-2">
+      {
+        categoryTitleList.map((category) => (
+          <li>
+            <a href={`/notes/${category.slug}`}>
+              <Envelopment title={category.title} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

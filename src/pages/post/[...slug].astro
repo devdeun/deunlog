@@ -1,0 +1,32 @@
+---
+import { type CollectionEntry } from 'astro:content'
+import PostLayout from '@/layouts/PostLayout.astro'
+import { getPostCollection, isBlogPost, isNotesPost, resolveSlug } from '@/lib/mdx'
+
+interface Props {
+  post: CollectionEntry<'post'>
+}
+
+export const getStaticPaths = async () => {
+  const posts = await getPostCollection()
+  return posts.map((post: CollectionEntry<'post'>, _, list) => {
+    const postList = list.filter((item) => {
+      if (isBlogPost(post)) return isBlogPost(item)
+      if (isNotesPost(post)) return isNotesPost(item) && item.data.category === post.data.category
+      return true
+    })
+
+    const postIndex = postList.findIndex((item) => item.id === post.id)
+    return {
+      params: { slug: resolveSlug(post.slug) },
+      props: {
+        post,
+        prevPost: postList[postIndex + 1],
+        nextPost: postList[postIndex - 1],
+      },
+    }
+  })
+}
+---
+
+<PostLayout {...Astro.props} />

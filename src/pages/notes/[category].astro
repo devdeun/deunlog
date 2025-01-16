@@ -1,0 +1,57 @@
+---
+import { NOTES_CATEGORIES } from '@/consts'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getPostInfoList } from '@/lib/mdx'
+import { isValidCategory } from '@/lib/notes'
+import { formatDate } from '@/lib/utils'
+
+const { category } = Astro.params
+
+export const getStaticPaths = async () => {
+  const allPosts = await getPostInfoList('notes')
+
+  const categoryList = [...new Set(allPosts.map((post) => post.category))].filter(isValidCategory)
+
+  return categoryList.map((category) => {
+    const postList = allPosts.filter((post) => post.category === category)
+
+    return {
+      params: { category },
+      props: { postList },
+    }
+  })
+}
+
+const { postList } = Astro.props
+---
+
+<BaseLayout>
+  <section data-animate class="group my-14">
+    <h2 class="mb-5 text-lg font-semibold">{NOTES_CATEGORIES[category]}</h2>
+    <div class="relative z-0 border-t last-of-type:border-b">
+      <ul data-animate class="py-4">
+        {
+          postList.map((post, index) => {
+            return (
+              <li style={`--lv-wait: ${index}`}>
+                <a
+                  href={post.href}
+                  class="group/item flex transition-opacity hover:!opacity-100 group-hover:opacity-40"
+                >
+                  <div class="flex flex-1 items-start border-t py-2 group-first-of-type/item:border-t-0">
+                    <div class="flex items-center gap-0.5 text-heading">
+                      <span class="mx-1 rounded-md px-1 transition">{post.title}</span>
+                    </div>
+                    <div class="ml-auto mt-0.5 flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition">
+                      <time datetime={String(post.date)}>{formatDate(post.date)}</time>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

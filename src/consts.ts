@@ -4,3 +4,7 @@ export const SITE = {
   DESCRIPTION: '',
   IMAGE: '',
 }
+
+export const NOTES_CATEGORIES = {
+  setting: '프로젝트 세팅',
+} as const

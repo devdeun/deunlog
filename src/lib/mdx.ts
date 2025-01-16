@@ -1,3 +1,54 @@
+import { getCollection, type CollectionEntry } from 'astro:content'
+
+export interface PostInfoModel {
+  title: string
+  description?: string
+  href: string
+  date: Date
+  updatedDate?: Date
+  category?: string
+}
+
+export const isBlogPost = (post: { slug: string }) => {
+  return post.slug.includes('blog/')
+}
+
+export const isNotesPost = (post: { slug: string }) => {
+  return post.slug.includes('notes/')
+}
+
+export const getPostCollection = async () => {
+  return (await getCollection('post')).sort(sortCollectionDateDesc)
+}
+
+export const sortCollectionDateDesc = (a: CollectionEntry<'post'>, b: CollectionEntry<'post'>) => {
+  return new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+}
+
+export const resolveSlug = (slug: string) => {
+  const [_type, ...slugList] = slug.split('/')
+  return slugList.join('/')
+}
+
+export const getPostInfoList = async (type: 'all' | 'blog' | 'notes' = 'all') => {
+  const posts = await getPostCollection()
+
+  return posts
+    .filter((post) => {
+      if (type === 'blog') return isBlogPost(post)
+      if (type === 'notes') return isNotesPost(post)
+      return true
+    })
+    .map<PostInfoModel>((post) => ({
+      title: post.data.title,
+      description: post.data.description,
+      href: `/post/${resolveSlug(post.slug)}`,
+      date: post.data.date,
+      updatedDate: post.data.updatedDate,
+      category: post.data.category,
+    }))
+}
+
 export const generateDescription = (content: string) => {
   const parsedContent = content
     .replace(/(?<=\])\((.*?)\)/g, '')

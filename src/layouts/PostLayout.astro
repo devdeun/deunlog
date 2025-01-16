@@ -13,8 +13,8 @@ import CopyCodeScript from '@/components/post/CopyCodeScript.astro'
 
 type Props = {
   post: CollectionEntry<'post'>
-  prevPost: CollectionEntry<'post'>
-  nextPost: CollectionEntry<'post'>
+  prevPost?: CollectionEntry<'post'>
+  nextPost?: CollectionEntry<'post'>
 }
 
 const { post, prevPost, nextPost } = Astro.props

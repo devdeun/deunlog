@@ -1,25 +1,18 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import { getCollection, type CollectionEntry } from 'astro:content'
-import dayjs from 'dayjs'
+import { getPostInfoList, type PostInfoModel } from '@/lib/mdx'
+import { formatDate } from '@/lib/utils'
 
-const posts: CollectionEntry<'post'>[] = (await getCollection('post')).sort(
-  (a: CollectionEntry<'post'>, b: CollectionEntry<'post'>) =>
-    b.data.date.valueOf() - a.data.date.valueOf()
-)
+const posts = await getPostInfoList('blog')
 
 const yearList = Object.entries(
-  posts.reduce<{ [year: string]: CollectionEntry<'post'>[] }>((acc, post) => {
-    const year = new Date(post.data.date).getFullYear()
+  posts.reduce<{ [year: string]: PostInfoModel[] }>((acc, post) => {
+    const year = new Date(post.date).getFullYear()
     if (!acc[year]) acc[year] = []
     acc[year].push(post)
     return acc
   }, {})
 ).sort((a, b) => +b[0] - +a[0])
-
-const formatDate = (date: Date) => {
-  return dayjs(new Date(date)).format('MM/DD')
-}
 ---
 
 <BaseLayout>
@@ -36,17 +29,15 @@ const formatDate = (date: Date) => {
                 return (
                   <li style={`--lv-wait: ${index}`}>
                     <a
-                      href={`/blog/${post.id}`}
+                      href={post.href}
                       class="group/item flex transition-opacity hover:!opacity-100 group-hover:opacity-40"
                     >
                       <div class="ml-[15%] flex flex-1 items-start border-t py-2 group-first-of-type/item:border-t-0">
                         <div class="flex items-center gap-0.5 text-heading">
-                          <span class="mx-1 rounded-md px-1 transition">{post.data.title}</span>
+                          <span class="mx-1 rounded-md px-1 transition">{post.title}</span>
                         </div>
                         <div class="ml-auto mt-0.5 flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition">
-                          <time datetime={String(post.data.date)}>
-                            {formatDate(post.data.date)}
-                          </time>
+                          <time datetime={String(post.date)}>{formatDate(post.date)}</time>
                         </div>
                       </div>
                     </a>
