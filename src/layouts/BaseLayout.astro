@@ -3,6 +3,7 @@ import BaseHead from '@/components/BaseHead.astro'
 import type { SEOModel } from '../types'
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
+import ThemeHead from '@/components/scripts/ThemeHead.astro'
 import '@/styles/animation.css'
 
 interface Props {
@@ -16,6 +17,7 @@ const { seo, class: className } = Astro.props
 <html lang="ko">
   <head>
     <BaseHead {...seo} />
+    <ThemeHead />
   </head>
   <body>
     <Header />

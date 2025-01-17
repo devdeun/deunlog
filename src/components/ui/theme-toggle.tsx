@@ -1,30 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useStore } from '@nanostores/react'
+
+import { THEME_MAP, type ThemeKey, themeStore } from '@/lib/stores/theme'
 import { MoonIcon, SunIcon } from './icons'
-import { changeGiscusTheme } from '../post/GiscusComment'
 import { Button } from './button'
-import { isDarkMode } from '@/lib/theme'
 
 const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(false)
-
-  useEffect(() => {
-    const isDark = isDarkMode()
-    setIsDark(isDark)
-
-    if (isDark) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [])
+  const theme = useStore(themeStore)
 
   const toggleTheme = () => {
-    const newTheme = isDark ? 'light' : 'dark'
-    setIsDark((prevTheme) => !prevTheme)
-    document.documentElement.classList.toggle('dark')
-
-    localStorage.setItem('theme', newTheme)
-    changeGiscusTheme(newTheme)
+    const themeKey: ThemeKey = theme === 'dark' ? 'light' : 'dark'
+    themeStore.set(THEME_MAP[themeKey])
   }
 
   return (

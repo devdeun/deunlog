@@ -1,4 +1,3 @@
-import { isDarkMode } from '@/lib/theme'
 import { useEffect } from 'react'
 
 const giscusThemes = {
@@ -21,7 +20,9 @@ export const changeGiscusTheme = (theme: keyof typeof giscusThemes) => {
 
 export const GiscusComment = (props: React.HTMLAttributes<HTMLElement>) => {
   useEffect(() => {
-    const theme: keyof typeof giscusThemes = isDarkMode() ? 'dark' : 'light'
+    const theme: keyof typeof giscusThemes = document.documentElement.classList.contains('dark')
+      ? 'dark'
+      : 'light'
 
     const giscusAttributes = {
       src: 'https://giscus.app/client.js',
