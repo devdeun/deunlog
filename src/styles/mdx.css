@@ -325,6 +325,12 @@ pre.astro-code code {
   position: relative;
 }
 
+html.dark pre.astro-code,
+html.dark pre.astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
 /* shiki transformer */
 .astro-code .highlighted,
 .astro-code .diff {

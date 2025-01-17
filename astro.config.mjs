@@ -26,7 +26,10 @@ export default defineConfig({
     mdx({
       syntaxHighlight: 'shiki',
       shikiConfig: {
-        theme: 'one-light',
+        themes: {
+          light: 'one-light',
+          dark: 'slack-dark',
+        },
         transformers: [
           transformerTwoslash({
             explicitTrigger: true,
