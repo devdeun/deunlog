@@ -307,7 +307,6 @@
 pre.astro-code {
   --astro-code-px: 24px;
   --astro-code-py: 20px;
-  position: relative;
   display: grid;
   padding: var(--astro-code-py) var(--astro-code-px);
   overflow-x: auto;
