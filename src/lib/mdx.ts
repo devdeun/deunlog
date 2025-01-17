@@ -17,7 +17,7 @@ export const isNotesPost = (post: { slug: string }) => {
   return post.slug.includes('notes/')
 }
 
-export const getPostCollection = async () => {
+export const getPostCollection = async (): Promise<CollectionEntry<'post'>[]> => {
   return (await getCollection('post')).sort(sortCollectionDateDesc)
 }
 
@@ -30,7 +30,9 @@ export const resolveSlug = (slug: string) => {
   return slugList.join('/')
 }
 
-export const getPostInfoList = async (type: 'all' | 'blog' | 'notes' = 'all') => {
+export const getPostInfoList = async (
+  type: 'all' | 'blog' | 'notes' = 'all'
+): Promise<PostInfoModel[]> => {
   const posts = await getPostCollection()
 
   return posts
