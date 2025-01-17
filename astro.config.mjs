@@ -21,7 +21,7 @@ import remarkBreaks from 'remark-breaks'
 import { transformerFragment } from './plugins/transformer-fragment'
 
 export default defineConfig({
-  site: 'https://deunlog.vercel.app',
+  site: 'https://deun.dev',
   integrations: [
     mdx({
       syntaxHighlight: 'shiki',
