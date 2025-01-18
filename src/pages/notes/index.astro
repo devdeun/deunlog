@@ -2,7 +2,7 @@
 import Envelopment from '@/components/ui/envelopment'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getPostInfoList } from '@/lib/mdx'
-import { isValidCategory, getCategoryTitleList } from '@/lib/notes'
+import { getCategoryTitleList, isValidCategory } from '@/lib/notes'
 
 const posts = await getPostInfoList('notes')
 

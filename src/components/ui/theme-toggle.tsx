@@ -1,8 +1,9 @@
 import { useStore } from '@nanostores/react'
 
 import { THEME_MAP, type ThemeKey, themeStore } from '@/lib/stores/theme'
-import { MoonIcon, SunIcon } from './icons'
+
 import { Button } from './button'
+import { MoonIcon, SunIcon } from './icons'
 
 const ThemeToggle = () => {
   const theme = useStore(themeStore)

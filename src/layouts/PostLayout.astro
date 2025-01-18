@@ -1,15 +1,18 @@
 ---
 import '@shikijs/twoslash/style-rich.css'
 import '@/styles/mdx.css'
+
 import type { CollectionEntry } from 'astro:content'
-import BaseLayout from './BaseLayout.astro'
-import { generateDescription, parseToc } from '@/lib/mdx'
 import dayjs from 'dayjs'
-import BasePagination from '@/components/BasePagination.astro'
+
 import BaseLeftAside from '@/components/BaseLeftAside.astro'
-import TableOfContent from '@/components/post/TableOfContent'
-import { GiscusComment } from '@/components/post/GiscusComment'
+import BasePagination from '@/components/BasePagination.astro'
 import CopyCodeScript from '@/components/post/CopyCodeScript.astro'
+import { GiscusComment } from '@/components/post/GiscusComment'
+import TableOfContent from '@/components/post/TableOfContent'
+import { generateDescription, parseToc } from '@/lib/mdx'
+
+import BaseLayout from './BaseLayout.astro'
 
 type Props = {
   post: CollectionEntry<'post'>

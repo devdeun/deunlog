@@ -1,15 +1,16 @@
 ---
-import { SITE } from '@/consts'
 import '../styles/global.css'
-import BaseFonts from './BaseFonts.astro'
+
+import { SITE } from '@/consts'
 import type { SEOModel } from '@/types'
+
+import BaseFonts from './BaseFonts.astro'
 
 interface Props extends SEOModel {}
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
 const { title = SITE.TITLE, description = SITE.DESCRIPTION, image = SITE.IMAGE } = Astro.props
-
 const formattedTitle = title === SITE.TITLE ? title : SITE.TITLE_TEMPLATE.replace('%s', title)
 ---
 

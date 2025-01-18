@@ -12,8 +12,12 @@
       await navigator.clipboard.writeText(code)
       copyButton.classList.add('copied')
 
-      timeoutId && clearTimeout(timeoutId)
-      blurTimeoutId && clearTimeout(blurTimeoutId)
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+      if (blurTimeoutId) {
+        clearTimeout(blurTimeoutId)
+      }
 
       blurTimeoutId = setTimeout(() => {
         if (document.activeElement === copyButton) {

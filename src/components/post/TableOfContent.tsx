@@ -1,7 +1,8 @@
-import type { TOCSectionModel } from '@/lib/mdx'
-import { cn } from '@/lib/utils'
 import { throttle } from 'es-toolkit'
 import { useEffect, useState } from 'react'
+
+import type { TOCSectionModel } from '@/lib/mdx'
+import { cn } from '@/lib/utils'
 
 const TableOfContent = ({
   toc,
