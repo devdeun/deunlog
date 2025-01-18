@@ -9,3 +9,5 @@ export const cn = (...inputs: ClassValue[]) => {
 export const formatDate = (date: Date) => {
   return dayjs(new Date(date)).format('MM/DD')
 }
+
+export const isProduction = import.meta.env.PROD
