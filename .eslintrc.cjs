@@ -6,8 +6,10 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
-
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {
@@ -15,7 +17,8 @@ module.exports = {
         fixStyle: 'inline-type-imports',
       },
     ],
-
+    '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
+    '@typescript-eslint/no-empty-object-type': 'off',
     'no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',
   },
