@@ -2,7 +2,7 @@ name: Process Images
 on:
   pull_request:
     paths:
-      - 'public/img/**'
+      - 'public/images/**'
 jobs:
   build:
     name: sharp
