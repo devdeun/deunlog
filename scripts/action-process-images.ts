@@ -1,5 +1,5 @@
-import { createComment, createCommit, imageToTreeBlob } from './github-api'
-import { sharpImages } from './sharp-api'
+import { createComment, createCommit, createTreeBlobs } from './github-api.js'
+import { sharpImages } from './sharp-api.js'
 
 const formatByte = (byte: number) => {
   let num = +byte
@@ -25,12 +25,13 @@ const formatImages = (num: number) => {
   }
 
   console.log('\n::✧:: Generating Blobs…')
-  const imageBlobs = await Promise.all(sharpedImageList.map(imageToTreeBlob))
+  const imageBlobs = await Promise.all(sharpedImageList.map(createTreeBlobs))
+  const flattenedBlobs = imageBlobs.flat()
 
   console.log('\n::✧:: Committing files…')
   const commit = await createCommit({
-    message: '::✧:: process images',
-    treeBlobs: imageBlobs,
+    message: '🖼️ 이미지 최적화',
+    treeBlobs: flattenedBlobs,
   })
 
   console.log('\n::✧:: Writing comment on PR…')
