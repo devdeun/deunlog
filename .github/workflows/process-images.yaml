@@ -5,7 +5,7 @@ on:
       - 'public/images/**'
 jobs:
   build:
-    name: sharp
+    name: Sharp
     runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.fork == false
     steps:
@@ -24,11 +24,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-primes-
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Create tsconfig.build.json
+        run: |
+          echo '{
+            "extends": "./tsconfig.json",
+            "compilerOptions": {
+              "target": "ES2021",
+              "module": "ES2020",
+              "outDir": "./dist",
+              "noEmit": false
+            },
+            "include": ["scripts/**/*"],
+            "exclude": ["src/**/*", "dist"]
+          }' > tsconfig.build.json
+      - name: Build TypeScript
+        run: |
+          npx tsc ./scripts/action-process-images.ts ./scripts/github-api.ts ./scripts/sharp-api.ts --outDir ./dist --esModuleInterop --target ES2021 --module ES2020 --moduleResolution bundler --allowJs --isolatedModules --skipLibCheck --jsx react
       - name: ✧ Process images and Report results
+        run: node ./dist/action-process-images.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_PULL_REQUEST: ${{ toJSON(github.event.pull_request) }}
-        run: npm run process-images
