@@ -28,7 +28,7 @@ jobs:
         run: npm ci
       - name: Build TypeScript
         run: |
-          npx tsc ./scripts/action-process-images.ts --outDir ./dist
+          npx tsc ./scripts/action-process-images.ts --outDir ./dist --esModuleInterop --target ES2021 --jsx react --skipLibCheck
       - name: ✧ Process images and Report results
         run: node ./dist/action-process-images.js
         env:
