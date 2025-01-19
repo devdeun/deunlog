@@ -1,8 +1,9 @@
 import * as fs from 'node:fs/promises'
 
 import { Octokit, type RestEndpointMethodTypes } from '@octokit/rest'
+import fg from 'fast-glob'
 
-import type { ProcessedResult } from './sharp-api'
+import type { ProcessedResult } from './sharp-api.js'
 
 export type GitTreeBlob = RestEndpointMethodTypes['git']['createTree']['parameters']['tree'][number]
 
@@ -36,23 +37,56 @@ const imageToBase64 = async (path: string) => {
   return base64
 }
 
-export const imageToTreeBlob = async (image: ProcessedResult) => {
-  const encodedImage = await imageToBase64(image.path)
+export const createTreeBlobs = async (image: ProcessedResult) => {
+  const blobs: GitTreeBlob[] = []
 
-  const blob = await api.rest.git.createBlob({
+  if (image.convertedToAvif) {
+    blobs.push({
+      path: image.path,
+      mode: '040000',
+      type: 'blob',
+      sha: null,
+    })
+  }
+
+  const filePath = image.convertedToAvif ? image.avifPath! : image.path
+  const encodedImage = await imageToBase64(filePath)
+
+  const imageBlob = await api.rest.git.createBlob({
     owner,
     repo,
     content: encodedImage,
     encoding: 'base64',
   })
-  console.log('✧', image.name, blob.data.url)
 
-  return {
-    path: image.path,
+  blobs.push({
+    path: filePath,
     mode: '100644',
     type: 'blob',
-    sha: blob.data.sha,
-  } satisfies GitTreeBlob
+    sha: imageBlob.data.sha,
+  })
+
+  const mdxFiles = await fg('src/content/post/**/*.mdx')
+
+  for (const mdxPath of mdxFiles) {
+    console.log('::✧:: Processing MDX:', mdxPath)
+    const content = await fs.readFile(mdxPath, 'utf-8')
+    const mdxBlob = await api.rest.git.createBlob({
+      owner,
+      repo,
+      content: content,
+      encoding: 'utf-8',
+    })
+
+    blobs.push({
+      path: mdxPath,
+      mode: '100644',
+      type: 'blob',
+      sha: mdxBlob.data.sha,
+    })
+  }
+
+  return blobs
 }
 
 export const createCommit = async ({

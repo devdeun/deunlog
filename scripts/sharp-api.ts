@@ -80,7 +80,6 @@ export const sharpImages = async () => {
     try {
       const filename = path.basename(filePath)
 
-      // Skip ignored files
       if (CONFIG.ignoreList.includes(filename)) {
         console.log(`::✧:: Skipping ignored file ${filename}`)
         continue
@@ -110,7 +109,6 @@ export const sharpImages = async () => {
 
         const avifPath = filePath.replace(`.${fileType}`, '.avif')
         await sharp(filePath).avif(SHARP_OPTIONS.avif).toFile(avifPath)
-
         const avifStats = await fs.stat(avifPath)
 
         if (avifStats.size < afterStats.size) {
