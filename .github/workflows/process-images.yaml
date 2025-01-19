@@ -26,9 +26,12 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      - name: Build TypeScript
+        run: |
+          npx tsc ./scripts/action-process-images.ts --outDir ./dist
       - name: ✧ Process images and Report results
+        run: node ./dist/action-process-images.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_PULL_REQUEST: ${{ toJSON(github.event.pull_request) }}
-        run: npm run process-images
