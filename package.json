@@ -7,9 +7,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint \"src/**/*.{js,ts,jsx,tsx,astro}\" --fix"
+    "lint": "eslint \"src/**/*.{js,ts,jsx,tsx,astro}\" --fix",
+    "process-images": "ts-node ./scripts/action-process-images.ts",
+    "sharp": "ts-node ./scripts/sharp.ts"
   },
   "dependencies": {
+    "@actions/github": "^6.0.0",
     "@astrojs/mdx": "^4.0.3",
     "@astrojs/react": "^4.1.2",
     "@astrojs/rss": "^4.0.10",
@@ -17,18 +20,24 @@
     "@astrojs/tailwind": "^5.1.4",
     "@nanostores/persistent": "^0.10.2",
     "@nanostores/react": "^0.8.4",
+    "@octokit/rest": "^21.1.0",
     "@radix-ui/react-slot": "^1.1.1",
     "astro": "^5.1.1",
     "dayjs": "^1.11.13",
     "es-toolkit": "^1.31.0",
+    "fast-glob": "^3.3.3",
     "lucide-react": "^0.469.0",
     "nanostores": "^0.11.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sharp": "^0.33.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   },
   "devDependencies": {
     "@shikijs/transformers": "^1.25.1",
     "@shikijs/twoslash": "^1.25.1",
+    "@types/node": "^22.10.7",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
