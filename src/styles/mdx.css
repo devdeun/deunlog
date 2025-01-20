@@ -232,7 +232,6 @@
 }
 
 /* medium zoom */
-.mdx img,
 .medium-zoom-image--opened {
   filter: drop-shadow(0 25px 20px rgba(0, 0, 0, 0.1));
 }
@@ -403,7 +402,7 @@ html.dark pre.astro-code span {
 
 [data-code-fragment] span.lang {
   position: absolute;
-  top: 16px;
+  top: 5px;
   right: 16px;
   z-index: 2;
   font-size: 0.75rem;
