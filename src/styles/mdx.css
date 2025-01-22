@@ -113,15 +113,19 @@
   @apply mb-2;
 }
 
+.mdx > ul {
+  @apply mt-6;
+}
+
 .mdx > ul,
 .mdx > ul ul {
-  padding-left: 16px;
+  padding-left: 20px;
   list-style-position: outside;
   list-style-type: disc;
 }
 
 .mdx > ul li > ul {
-  @apply list-[circle];
+  @apply mb-3 mt-1 list-[circle];
 }
 
 .mdx > ul li {
@@ -130,10 +134,6 @@
 
 .mdx > ul li::marker {
   color: var(--gray-700);
-}
-
-.mdx > ul li > ul {
-  @apply mb-3 mt-1;
 }
 
 .mdx > ul li > div,
