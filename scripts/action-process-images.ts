@@ -46,9 +46,9 @@ Detected **${formatImages(metrics.totalFiles)}**
 - Saved space: **${formatByte(metrics.savedBytes)}**
 - Updated MDX files: **${metrics.mdxUpdates}**
 
-${sharpedImageList.map((image) =>`
 | Filename | Before | After | Improvement |
 | -------- | ------ | ----- | ----------- |
+${sharpedImageList.map((image) =>`
 | <code>${image.name}</code> | ${formatByte(image.beforeSize)} | ${formatByte(image.afterSize)} | -${image.percentChange}% | ${image.convertedToAvif ? '✓' : '✗'} |
 `.trim()).join('\n')}
 `.trim()
