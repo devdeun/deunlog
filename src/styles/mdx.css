@@ -207,28 +207,29 @@
 
 .mdx figure {
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
-.mdx img {
-  display: flex;
+.mdx figure > div {
   border-radius: 8px;
+  border: 1px solid var(--gray-200);
+}
+
+.mdx figure > div:has(img.loaded) {
   background-color: #fcfcfc;
-  box-shadow: 0 0 0 1px var(--gray-200);
-  overflow: hidden;
 }
 
 .mdx img + em,
 .mdx img + em p,
 .mdx figcaption {
   display: inline-block;
-  margin-top: 8px;
+  margin-top: 4px;
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: 13px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  color: var(--astro-code-token-comment);
+  color: var(--gray-500);
 }
 
 /* medium zoom */
