@@ -23,7 +23,7 @@ type Props = {
 
 const { post, prevPost, nextPost } = Astro.props
 
-const { title, date } = post.data
+const { title, date, image } = post.data
 const description = post.data.description || generateDescription(post.body)
 const formattedDate = dayjs(new Date(date)).format('YYYY/MM/DD')
 const toc = parseToc(post.body)
@@ -31,7 +31,7 @@ const toc = parseToc(post.body)
 const { Content } = await post.render()
 ---
 
-<BaseLayout seo={{ title, description }}>
+<BaseLayout seo={{ title, description, image }}>
   <BaseLeftAside>
     <TableOfContent data-animate className="px-2 text-sm md:hidden" toc={toc} client:load />
   </BaseLeftAside>
