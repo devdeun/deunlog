@@ -9,6 +9,7 @@ import BaseLeftAside from '@/components/BaseLeftAside.astro'
 import BasePagination from '@/components/BasePagination.astro'
 import CopyCodeScript from '@/components/post/CopyCodeScript.astro'
 import { GiscusComment } from '@/components/post/GiscusComment'
+import MediumZoomScript from '@/components/post/MediumZoomScript.astro'
 import PostImage from '@/components/post/PostImage.astro'
 import TableOfContent from '@/components/post/TableOfContent'
 import { generateDescription, parseToc } from '@/lib/mdx'
@@ -49,5 +50,6 @@ const { Content } = await post.render()
       <GiscusComment className="mx-auto my-half-page" client:load />
     </footer>
   </section>
+  <MediumZoomScript />
   <CopyCodeScript />
 </BaseLayout>
