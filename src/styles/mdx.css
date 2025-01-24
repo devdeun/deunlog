@@ -234,7 +234,7 @@
 
 /* medium zoom */
 .medium-zoom-image--opened {
-  filter: drop-shadow(0 25px 20px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.05));
 }
 
 .medium-zoom-overlay,
