@@ -12,6 +12,7 @@ import { GiscusComment } from '@/components/post/GiscusComment'
 import MediumZoomScript from '@/components/post/MediumZoomScript.astro'
 import PostImage from '@/components/post/PostImage.astro'
 import TableOfContent from '@/components/post/TableOfContent'
+import { UndoIcon } from '@/components/ui/icons'
 import { generateDescription, parseToc } from '@/lib/mdx'
 
 import BaseLayout from './BaseLayout.astro'
@@ -34,7 +35,16 @@ const { Content } = await post.render()
 
 <BaseLayout seo={{ title, description, image }}>
   <BaseLeftAside>
-    <TableOfContent data-animate className="px-2 text-sm md:hidden" toc={toc} client:load />
+    <a
+      class="link flex w-fit items-center gap-1.5"
+      href="#"
+      onclick="history.back(); return false;"
+      data-animate
+    >
+      <UndoIcon strokeWidth={2} />
+      <span class="font-serif text-sm font-bold italic">Back</span>
+    </a>
+    <TableOfContent data-animate className="pt-6 text-sm md:hidden" toc={toc} client:load />
   </BaseLeftAside>
   <section>
     <h1 class="mt-14">{title}</h1>
