@@ -13,7 +13,7 @@ export const PageActions = () => {
   }
 
   return (
-    <ul className="mt-4 flex items-center gap-1 lg:mt-0">
+    <ul className="mt-4 flex items-center gap-1 lg:mt-0" data-animate>
       <li className="inline-flex">
         <CopyLinkButton />
       </li>

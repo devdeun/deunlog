@@ -43,9 +43,9 @@ const { Content } = await post.render()
       data-animate
     >
       <UndoIcon strokeWidth={2} />
-      <span class="font-serif text-sm font-bold italic">Back</span>
+      <span class="font-serif text-sm font-bold italic text-gray-700">Back</span>
     </a>
-    <TableOfContent data-animate className="pl-1 pt-6 text-sm lg:hidden" toc={toc} client:load />
+    <TableOfContent className="pl-1 pt-6 text-sm lg:hidden" data-animate toc={toc} client:load />
     <PageActions client:load />
   </BaseLeftAside>
   <section>
