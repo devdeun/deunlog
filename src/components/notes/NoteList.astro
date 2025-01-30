@@ -1,0 +1,35 @@
+---
+import type { PostInfoModel } from '@/lib/mdx'
+import { formatDate } from '@/lib/utils'
+
+interface Props {
+  notes: PostInfoModel[]
+}
+
+const { notes } = Astro.props
+---
+
+<h2 class="text-md mb-2 mt-14 px-1 font-serif font-semibold">All Notes</h2>
+<ul class="group">
+  {
+    notes.map((note, index) => (
+      <li style={`--lv-wait: ${index}`}>
+        <a
+          href={note.href}
+          class="group/item flex transition-opacity hover:!opacity-100 group-hover:opacity-40"
+        >
+          <div class="flex flex-1 items-start border-t py-0.5 group-first-of-type/item:border-t-0">
+            <div class="flex items-center gap-0.5 text-heading">
+              <span class="mr-1 rounded-md px-1 transition">
+                ({note.category}) {note.title}
+              </span>
+            </div>
+            <div class="ml-auto mt-0.5 flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition">
+              <time datetime={String(note.date)}>{formatDate(note.date)}</time>
+            </div>
+          </div>
+        </a>
+      </li>
+    ))
+  }
+</ul>
