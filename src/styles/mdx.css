@@ -216,7 +216,7 @@
 }
 
 .mdx figure > div:has(img.loaded) {
-  background-color: #fcfcfc;
+  background-color: var(--gray-75);
 }
 
 .mdx img + em,
