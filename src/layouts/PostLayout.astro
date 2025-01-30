@@ -10,6 +10,7 @@ import BasePagination from '@/components/BasePagination.astro'
 import CopyCodeScript from '@/components/post/CopyCodeScript.astro'
 import { GiscusComment } from '@/components/post/GiscusComment'
 import MediumZoomScript from '@/components/post/MediumZoomScript.astro'
+import { PageActions } from '@/components/post/PageActions'
 import PostImage from '@/components/post/PostImage.astro'
 import TableOfContent from '@/components/post/TableOfContent'
 import { UndoIcon } from '@/components/ui/icons'
@@ -44,7 +45,8 @@ const { Content } = await post.render()
       <UndoIcon strokeWidth={2} />
       <span class="font-serif text-sm font-bold italic">Back</span>
     </a>
-    <TableOfContent data-animate className="pt-6 text-sm md:hidden" toc={toc} client:load />
+    <TableOfContent data-animate className="pl-1 pt-6 text-sm lg:hidden" toc={toc} client:load />
+    <PageActions client:load />
   </BaseLeftAside>
   <section>
     <h1 class="mt-14">{title}</h1>
