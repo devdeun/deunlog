@@ -46,6 +46,7 @@ export default {
       },
       backgroundColor: {
         page: 'var(--page-background)',
+        opacity: 'var(--page-opacity)',
       },
       maxWidth: {
         page: 'var(--page-width)',

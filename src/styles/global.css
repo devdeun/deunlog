@@ -22,6 +22,7 @@
     --drag: hsla(201, 50%, 40%, 10%);
     --border: hsla(0, 0%, 0%, 0.1);
     --page-background: var(--gray-50);
+    --page-opacity: rgba(255, 255, 255, 0.8);
 
     --heading: var(--gray-900);
     --text-body: var(--gray-800);
@@ -49,6 +50,7 @@
     --selection: hsla(0, 0%, 100%, 0.077);
     --border: 215 27.9% 16.9%;
     --page-background: var(--gray-100);
+    --page-opacity: rgba(29, 29, 29, 0.8);
 
     --heading: var(--gray-900);
     --text-body: var(--gray-800);
