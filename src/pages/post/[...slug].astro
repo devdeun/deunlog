@@ -18,8 +18,9 @@ export const getStaticPaths = async () => {
     })
 
     const postIndex = postList.findIndex((item) => item.id === post.id)
+    const slug = resolveSlug(post.slug)
     return {
-      params: { slug: resolveSlug(post.slug) },
+      params: { slug: isNotesPost(post) ? `note/${slug}` : slug },
       props: {
         post,
         prevPost: postList[postIndex + 1],

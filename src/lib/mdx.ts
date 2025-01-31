@@ -44,7 +44,7 @@ export const getPostInfoList = async (
     .map<PostInfoModel>((post) => ({
       title: post.data.title,
       description: post.data.description,
-      href: `/post/${resolveSlug(post.slug)}`,
+      href: `/post/${type === 'notes' ? 'note/' : ''}${resolveSlug(post.slug)}`,
       date: post.data.date,
       updatedDate: post.data.updatedDate,
       category: post.data.category,
