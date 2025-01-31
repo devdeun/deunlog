@@ -74,7 +74,9 @@ export type TOCSubSectionModel = {
 }
 
 export const parseToc = (source: string) => {
-  return source
+  const withoutCodeBlocks = source.replace(/```[\s\S]*?```/g, '')
+
+  return withoutCodeBlocks
     .split('\n')
     .filter((line) => line.match(/(^#{1,3})\s/))
     .reduce<TOCSectionModel[]>((acc, rawHeading) => {
