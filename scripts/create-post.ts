@@ -32,13 +32,14 @@ const createPost = async () => {
 
     const content = `---
 title: ${title}
-description: ${description || ''}
-date: ${date}
+${description && `description: ${description}\n`}date: ${date}
 updatedDate: ${date}
-tags: ${parsedTags.length ? `[${parsedTags.join(', ')}]` : ''}
-category: ${category || ''}
-image: ''
----`
+tags: [${parsedTags.length ? `${parsedTags.join(', ')}` : ''}]
+${category && `category: ${category}\n`}image: ''
+---
+
+${title}
+`
 
     await fs.mkdir(dir, { recursive: true })
     await fs.writeFile(path.join(dir, `${filename}.mdx`), content)
