@@ -392,7 +392,6 @@ html.dark pre.astro-code span {
 [data-code-fragment] [data-code-title] {
   margin-bottom: 0.25rem;
   font-size: 0.9rem;
-  color: var(--astro-code-token-comment);
 }
 
 [data-code-fragment] [data-code-caption] {
@@ -477,6 +476,14 @@ html.dark pre.astro-code span {
 [data-code-fragment] .copy:focus,
 [data-code-fragment]:hover .copy:hover {
   border-color: var(--border);
+}
+
+[data-code-fragment] [data-code-title] + .astro-code .copy {
+  top: 44px;
+}
+
+[data-code-fragment] [data-code-title] + .astro-code .lang {
+  display: none;
 }
 
 /* rehype-autolink-headings */

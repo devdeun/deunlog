@@ -13,12 +13,14 @@ npm install -D prettier @trivago/prettier-plugin-sort-imports
 
 ## .prettierrc 설정
 
-```json
+react 프로젝트에서는 `"^(next/(.*)$)|^(next$)"` 생략
+
+```json title=".prettierrc"
 {
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
     "^(react/(.*)$)|^(react$)",
-    "^(next/(.*)$)|^(next$)", // react 프로젝트에서는 생략
+    "^(next/(.*)$)|^(next$)",
     "<THIRD_PARTY_MODULES>",
     "^@/(.*)$",
     "^[./]"
@@ -39,7 +41,7 @@ npm install -D prettier @trivago/prettier-plugin-sort-imports
 npm install -D prettier-plugin-tailwindcss
 ```
 
-```json
+```json title=".prettierrc"
 {
   "plugins": ["prettier-plugin-tailwindcss"] // 추가
 }
