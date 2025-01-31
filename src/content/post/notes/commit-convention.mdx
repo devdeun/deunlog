@@ -1,14 +1,14 @@
 ---
 title: 자주 쓰는 커밋 컨벤션
 date: 2025-01-31
-updatedDate: 2025-01-31
+updatedDate: 2025-02-01
 tags: ['git', 'convention']
 category: setting
 ---
 
 ## 기본 컨벤션
 
-```txt title=".gitmessage.txt"
+```txt title=".github/.gitmessage.txt"
 ################
 
 # <타입>: <제목> (#이슈 번호) 의 형식으로 제목 작성
@@ -42,7 +42,7 @@ category: setting
 
 ## 이모지 컨벤션
 
-```txt title=".gitmessage.txt"
+```txt title=".github/.gitmessage.txt"
 ################
 
 # <타입> <제목> (#이슈 번호) 의 형식으로 제목 작성
@@ -104,3 +104,104 @@ git config --global commit.template /Users/(경로에 맞게 수정)/.gitmessage
 ```
 git config --global --get commit.template
 ```
+
+## CommitLint 설정
+
+- 커밋 메시지가 규칙에 맞는지 검사하는 도구
+- [Lefthook](./lefthook)이나 Husky 등의 패키지와 함께 사용하면 편리함
+
+### 기본 컨벤션
+
+```js title="commitlint.config.js"
+export default {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'type-enum': [
+      2,
+      'always',
+      [
+        'feat',
+        'fix',
+        'bug',
+        'refactor',
+        'design',
+        'style',
+        'docs',
+        'test',
+        'settings',
+        'chore',
+        'init',
+        'rename',
+        'remove',
+        'build',
+        'perf',
+        'deploy',
+      ],
+    ],
+    'subject-empty': [2, 'never'],
+    'type-case': [2, 'always', 'lower'],
+    'type-empty': [2, 'never'],
+    'subject-case': [0],
+    'references-empty': [2, 'never'],
+  },
+  parserPreset: {
+    parserOpts: {
+      headerPattern: /^(\w*): (.+) \(#\d+\)$/,
+      headerCorrespondence: ['type', 'subject', 'references'],
+    },
+  },
+}
+```
+
+### 이모지 컨벤션
+
+```js title="commitlint.config.js"
+export default {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'type-enum': [
+      2,
+      'always',
+      [
+        '✨',
+        '🔨',
+        '🐛',
+        '♻️',
+        '🎨',
+        '📏',
+        '📝',
+        '✅',
+        '⚙️',
+        '🧹',
+        '🎉',
+        '🚚',
+        '🔥',
+        '📦',
+        '⚡️',
+        '🚀',
+      ],
+    ],
+    'subject-empty': [2, 'never'],
+    'type-empty': [2, 'never'],
+    'subject-case': [0],
+    'references-empty': [2, 'never'],
+  },
+  parserPreset: {
+    parserOpts: {
+      headerPattern: /^([\u{1F300}-\u{1F9FF}|[\u{2600}-\u{26FF}])\s+(.+?)(?:\s+\(#\d+\))?$/u,
+      headerCorrespondence: ['type', 'subject', 'references'],
+    },
+  },
+}
+```
+
+### 옵션
+
+> 2는 error, 1은 warning, 0은 disable을 의미
+
+- `type-enum`: 커밋 타입 제한
+- `'subject-empty': [2, 'never']`: 제목 필수
+- `'type-case': [2, 'always', 'lower']`: 타입은 소문자만
+- `'type-empty': [2, 'never']`: 타입 필수
+- `'subject-case': [0]`: 제목 케이스 스타일 제한 없음
+- `'references-empty': [2, 'never']`: 이슈 번호 필수
