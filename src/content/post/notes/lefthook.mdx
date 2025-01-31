@@ -1,0 +1,114 @@
+---
+title: Lefthook으로 git hooks 적용하기
+date: 2025-02-01
+updatedDate: 2025-02-01
+tags: ['lefthook', 'git hook']
+category: setting
+---
+
+Lefthook으로 pre-commit, pre-push, prepare-commit-msg, commit-msg 적용하기
+
+- pre-commit: commit 전에 eslint, prettier, type 검사
+- pre-push: push 전에 의존성 검사
+- prepare-commit-msg: 커밋 메시지 컨벤션 템플릿 설정
+- commit-msg: 커밋 메시지 규칙 검사
+
+## install
+
+```
+npm install -D lefthook @commitlint/cli @commitlint/config-conventional
+```
+
+## 설정 파일 구조
+
+```
+root/
+├── lefthook.yml
+├── commitlint.config.js
+├── .github/
+│   ├── scripts/
+│   │   └── copy-template.js
+│   └── .gitmessage.txt
+```
+
+## lefthook.yml
+
+```yml title="lefthook.yml"
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: '*.{js,ts,jsx,tsx}'
+      run: npx eslint {staged_files} --fix
+      stage_fixed: true
+    prettier:
+      glob: '*.{js,ts,jsx,tsx,json,yaml,md,prettierrc}'
+      run: npm run prettier {staged_files}
+      stage_fixed: true
+    type-check:
+      run: npm run type-check
+pre-push:
+  commands:
+    audit-check:
+      run: npm audit
+prepare-commit-msg:
+  commands:
+    template:
+      run: node .github/scripts/copy-template.js {1}
+commit-msg:
+  commands:
+    lint-commit-msg:
+      run: npx commitlint --edit {1}
+```
+
+### Lefthook 실행 옵션
+
+- `parallel: true`: 병렬 실행
+- `stage_fixed`: lint나 prettier로 자동 수정된 파일을 스테이징
+
+### Hook 명령어
+
+- `{staged_files}`: git에 스테이징 된 파일 대상으로 실행
+- `type-check`: TypeScript 타입 체크
+- `audit-check`: 보안 취약점 검사
+  - 의존성 패키지의 보안 취약점 검사를 매 커밋마다 실행하면 실행이 오래 걸릴 수 있으므로 `pre-push` 사용
+
+## package.json
+
+스크립트에 prettier, type-check 추가
+
+```json title="package.json"
+{
+  "scripts": {
+    // ...
+    "prettier": "prettier --write .",
+    "type-check": "tsc --noEmit -p ./tsconfig.json"
+  }
+}
+```
+
+## 커밋 메시지 컨벤션 설정
+
+- `.github/.gitmessage.txt`에 [커밋 메시지 컨벤션](./commit-convention) 추가
+- `commitlint.config.js`에 [CommitLint 설정](./commit-convention#commitlint-설정) 추가
+- `package.json`에 `"type": "module"` 추가
+
+```js title=".github/scripts/copy-template.js"
+import { copyFileSync } from 'fs'
+import { join } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+const templatePath = join(__dirname, '..', '.gitmessage.txt')
+const targetPath = process.argv[2]
+
+copyFileSync(templatePath, targetPath)
+```
+
+## 초기화
+
+**모든 팀원**이 각자 실행해야 됨
+
+```
+npx lefthook install
+```
