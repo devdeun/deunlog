@@ -20,11 +20,13 @@ export const PageActions = () => {
       <li className="inline-flex">
         <ActionButton onClick={handleScrollToComments}>
           <CommentIcon />
+          <span className="sr-only">댓글으로 이동</span>
         </ActionButton>
       </li>
       <li className="inline-flex lg:hidden">
         <ActionButton onClick={handleScrollToTop}>
           <ArrowTopIcon />
+          <span className="sr-only">상단으로 이동</span>
         </ActionButton>
       </li>
     </ul>

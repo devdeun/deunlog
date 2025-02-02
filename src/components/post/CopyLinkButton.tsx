@@ -34,6 +34,9 @@ export const CopyLinkButton = () => {
   }
 
   return (
-    <ActionButton onClick={handleCopyLink}>{isCopied ? <CheckIcon /> : <LinkIcon />}</ActionButton>
+    <ActionButton onClick={handleCopyLink}>
+      {isCopied ? <CheckIcon /> : <LinkIcon />}
+      <span className="sr-only">링크 복사</span>
+    </ActionButton>
   )
 }
