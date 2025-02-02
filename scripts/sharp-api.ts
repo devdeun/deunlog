@@ -10,12 +10,17 @@ export const SHARP_OPTIONS: {
   jpeg: sharp.JpegOptions
   webp: sharp.WebpOptions
   avif: sharp.AvifOptions
+  gif: sharp.GifOptions
 } = {
   png: {},
   jpeg: {},
   webp: {},
   avif: {
     quality: 65,
+  },
+  gif: {
+    effort: 7,
+    dither: 0.5,
   },
 }
 export type SharpOptionType = keyof typeof SHARP_OPTIONS
@@ -26,11 +31,12 @@ export const SHARP_OPTIONS_TYPE_MAPPER = {
   jpeg: 'jpeg',
   webp: 'webp',
   avif: 'avif',
+  gif: 'gif',
 } as const satisfies { [key: string]: SharpOptionType }
 export type SharpFileType = keyof typeof SHARP_OPTIONS_TYPE_MAPPER
 
 const CONFIG = {
-  imageGlobPattern: 'public/images/**/*.{png,jpg,jpeg,webp}',
+  imageGlobPattern: 'public/images/**/*.{png,jpg,jpeg,webp,gif}',
   mdxGlobPattern: 'src/content/post/**/*.mdx',
   ignoreList: ['og.png'],
 }
@@ -91,7 +97,10 @@ export const sharpImages = async () => {
       const sharpOption = SHARP_OPTIONS[sharpOptionType]
 
       const sharpedFilePath = filePath.replace(`.${fileType}`, `.sharp.${fileType}`)
-      await sharp(filePath)[sharpOptionType](sharpOption).toFile(sharpedFilePath)
+
+      await sharp(filePath, fileType === 'gif' ? { animated: true } : {})
+        [sharpOptionType](sharpOption)
+        .toFile(sharpedFilePath)
 
       const beforeStats = await fs.stat(filePath)
       const afterStats = await fs.stat(sharpedFilePath)
@@ -104,23 +113,25 @@ export const sharpImages = async () => {
         percentChange: +((1 - afterStats.size / beforeStats.size) * 100).toFixed(2),
       }
 
-      if (processedResult.percentChange > 1) {
+      if (processedResult.percentChange > 0) {
         await fs.writeFile(filePath, await fs.readFile(sharpedFilePath))
 
-        const avifPath = filePath.replace(`.${fileType}`, '.avif')
-        await sharp(filePath).avif(SHARP_OPTIONS.avif).toFile(avifPath)
-        const avifStats = await fs.stat(avifPath)
+        if (fileType !== 'gif') {
+          const avifPath = filePath.replace(`.${fileType}`, '.avif')
+          await sharp(filePath).avif(SHARP_OPTIONS.avif).toFile(avifPath)
+          const avifStats = await fs.stat(avifPath)
 
-        if (avifStats.size < afterStats.size) {
-          processedResult.convertedToAvif = true
-          processedResult.avifPath = avifPath
+          if (avifStats.size < afterStats.size) {
+            processedResult.convertedToAvif = true
+            processedResult.avifPath = avifPath
 
-          const avifFilename = path.basename(avifPath)
-          mdxUpdates += await updateMdxReferences(filename, avifFilename)
+            const avifFilename = path.basename(avifPath)
+            mdxUpdates += await updateMdxReferences(filename, avifFilename)
 
-          await unlink(filePath)
-        } else {
-          await unlink(avifPath)
+            await unlink(filePath)
+          } else {
+            await unlink(avifPath)
+          }
         }
 
         sharpedImageList.push(processedResult)
