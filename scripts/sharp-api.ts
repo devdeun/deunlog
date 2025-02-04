@@ -93,6 +93,14 @@ export const sharpImages = async () => {
       const sharpOptionType = SHARP_OPTIONS_TYPE_MAPPER[fileType]
       const sharpOption = SHARP_OPTIONS[sharpOptionType]
 
+      const metadata = await sharp(filePath).metadata()
+      const isAnimatedWebp = fileType === 'webp' && metadata.pages && metadata.pages > 1
+
+      if (isAnimatedWebp) {
+        console.log(`::✧:: Skipping animated WebP file ${filename}`)
+        continue
+      }
+
       const sharpedFilePath = filePath.replace(`.${fileType}`, `.sharp.${sharpOptionType}`)
 
       await sharp(filePath, fileType === 'gif' ? { animated: true } : {})
@@ -128,8 +136,6 @@ export const sharpImages = async () => {
           } else {
             await unlink(avifPath)
           }
-
-          await unlink(sharpedFilePath)
         }
 
         if (fileType === 'gif') {
@@ -143,6 +149,10 @@ export const sharpImages = async () => {
         sharpedImageList.push(processedResult)
       } else {
         unSharpedImageList.push(processedResult)
+      }
+
+      if (fileType !== 'gif') {
+        await unlink(sharpedFilePath)
       }
     } catch (error) {
       console.log('::error::', error)
