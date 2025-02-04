@@ -18,10 +18,7 @@ export const SHARP_OPTIONS: {
   avif: {
     quality: 65,
   },
-  gif: {
-    effort: 7,
-    dither: 0.5,
-  },
+  gif: {},
 }
 export type SharpOptionType = keyof typeof SHARP_OPTIONS
 
@@ -31,7 +28,7 @@ export const SHARP_OPTIONS_TYPE_MAPPER = {
   jpeg: 'jpeg',
   webp: 'webp',
   avif: 'avif',
-  gif: 'gif',
+  gif: 'webp',
 } as const satisfies { [key: string]: SharpOptionType }
 export type SharpFileType = keyof typeof SHARP_OPTIONS_TYPE_MAPPER
 
@@ -96,7 +93,7 @@ export const sharpImages = async () => {
       const sharpOptionType = SHARP_OPTIONS_TYPE_MAPPER[fileType]
       const sharpOption = SHARP_OPTIONS[sharpOptionType]
 
-      const sharpedFilePath = filePath.replace(`.${fileType}`, `.sharp.${fileType}`)
+      const sharpedFilePath = filePath.replace(`.${fileType}`, `.sharp.${sharpOptionType}`)
 
       await sharp(filePath, fileType === 'gif' ? { animated: true } : {})
         [sharpOptionType](sharpOption)
@@ -132,6 +129,14 @@ export const sharpImages = async () => {
           } else {
             await unlink(avifPath)
           }
+        }
+
+        if (fileType === 'gif') {
+          const webpPath = filePath.replace('.gif', '.webp')
+          await fs.rename(sharpedFilePath, webpPath)
+          const webpFilename = path.basename(webpPath)
+          mdxUpdates += await updateMdxReferences(filename, webpFilename)
+          await unlink(filePath)
         }
 
         sharpedImageList.push(processedResult)
