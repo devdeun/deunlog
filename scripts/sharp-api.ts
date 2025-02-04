@@ -111,9 +111,8 @@ export const sharpImages = async () => {
       }
 
       if (processedResult.percentChange > 0) {
-        await fs.writeFile(filePath, await fs.readFile(sharpedFilePath))
-
         if (fileType !== 'gif') {
+          await fs.writeFile(filePath, await fs.readFile(sharpedFilePath))
           const avifPath = filePath.replace(`.${fileType}`, '.avif')
           await sharp(filePath).avif(SHARP_OPTIONS.avif).toFile(avifPath)
           const avifStats = await fs.stat(avifPath)
@@ -129,6 +128,8 @@ export const sharpImages = async () => {
           } else {
             await unlink(avifPath)
           }
+
+          await unlink(sharpedFilePath)
         }
 
         if (fileType === 'gif') {
@@ -143,8 +144,6 @@ export const sharpImages = async () => {
       } else {
         unSharpedImageList.push(processedResult)
       }
-
-      await unlink(sharpedFilePath)
     } catch (error) {
       console.log('::error::', error)
     }
