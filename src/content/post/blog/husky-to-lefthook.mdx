@@ -1,0 +1,152 @@
+---
+title: Husky를 Lefthook으로 마이그레이션하기
+date: 2025-02-05
+updatedDate: 2025-02-05
+tags: [husky, lefthook, git hooks, pre commit, pre push]
+image: '/images/husky-to-lefthook/waiting-husky-pre-commit.png'
+---
+
+<div className="mx-auto w-2/3 sm:w-full">
+  ![커밋 메시지를 작성하기 위해 기다리는
+  나...](/images/husky-to-lefthook/waiting-husky-pre-commit.png)
+</div>
+
+[냥트코인](https://nyantcoin.koyeb.app/) 프로젝트에서 코드 품질을 관리하기 위해 `Husky`를 사용하고 있었다. 커밋할 때마다 ESLint와 Prettier 규칙을 자동으로 검사했는데, **너무 느려서** 한참 동안 기다려야 했다.
+**개발 생산성**이 많이 떨어진다는 생각이 들어 리팩토링을 시작하기 전 가장 먼저 이 문제를 해결하고 싶었다.
+
+## Git Hooks란?
+
+[Git Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)는 `commit`, `push` 등 **git 이벤트가 발생**했을 때 **특정 스크립트를 실행**할 수 있게 해주는 기능이다.
+이를 활용해 **코드 스타일 검사**나 **테스트 실행** 등을 자동화할 수 있어서 **코드 품질**을 관리하기 좋다.
+
+하지만 모든 팀원이 각자 Git Hooks를 설정하는 건 번거롭기 때문에 `Husky`나 `Lefthook` 같은 패키지로 팀원 모두 일관성 있게 Git Hooks를 적용하는게 편하다.
+
+## Husky는 왜 느렸을까
+
+우선 기존 Husky 설정을 확인해 보자.
+
+```txt title=".husky/pre-commit"
+#!/usr/bin/env sh
+
+npm run lint && npm run prettier
+
+if [ $? -ne 0 ]; then
+  echo "Linting or formatting failed. Commit aborted."
+  exit 1
+fi
+```
+
+이 설정에는 다음과 같은 문제점이 있다.
+
+- **비효율적인 검사 범위**: **모든 파일을 대상**으로 `ESLint`와 `Prettier` 검사가 수행된다.
+- **순차적 실행**: `ESLint`와 `Prettier`가 순차적으로 실행된다.
+
+**검사 범위가 넓은 데다 순차적으로 실행**되어 시간이 오래 걸릴 수밖에 없었다.
+
+## Lefthook
+
+> Meet Lefthook, **the fastest polyglot Git hooks manager** out there, and make sure not a single line of unruly code makes it into production.
+
+`Lefthook`은 **Go 언어**로 만들어서 JavaScript로 만든 Husky보다 **더 빠르고 효율적**이다.
+Husky는 순차적으로 hooks를 실행하는 반면 `Lefthook`은 **병렬 실행**(parallel)을 지원해 pre-commit, pre-push 작업이 많아져도 검사 시간을 크게 줄일 수 있다.
+`YAML` 형식의 설정 파일을 사용해 설정을 **직관적으로 파악**하기도 좋다.
+
+Husky로도 변경된 파일만 검사하도록 설정할 수는 있지만, **병렬 실행**과 **더 빠른 속도**라는 장점 때문에 Lefthook을 선택했다.
+
+## Husky에서 Lefthook으로
+
+```
+npm uninstall -D husky
+npm install -D lefthook
+```
+
+`.husky` 폴더를 삭제하고 위의 명령어를 입력하면 lefthook 설정을 추가할 준비가 끝난다.
+
+```yml title="lefthook.yml"
+pre-commit:
+  parallel: true
+  commands:
+    lint-staged:
+      run: npx lint-staged
+
+pre-push:
+  parallel: true
+  commands:
+    type-check:
+      run: npm run type-check
+    audit-check:
+      run: npm audit
+```
+
+위와 같이 Lefthook 설정 파일을 추가하면 쉽고 빠르게 Lefthook 설정을 마칠 수 있다.
+기존 Husky 설정에서는 `pre-commit`만 작성되어 있었는데 `pre-push`도 추가해 안정성을 높였다.
+
+실행할 npm 명령어는 `package.json`의 scripts에 추가해야 한다.
+
+```json title="package.json"
+{
+  "scripts": {
+    "type-check": "tsc --noEmit -p ./tsconfig.json" // 타입 검사를 위해 추가
+  }
+}
+```
+
+Lefthook 설정만으로도 **staged**된 파일들만 검사를 하도록 설정할 수 있지만, `lint-staged` 패키지가 이미 설치되어 있어 <span className="text-gray-400">(하지만 사용은 안했던..)</span> 해당 패키지를 적용해 봤다.
+
+```json title="package.json"
+{
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": ["npx next lint --fix --dir .", "prettier --write"],
+    "*.{css,md,json}": ["prettier --write"]
+  }
+}
+```
+
+[Lefthook으로 git hooks 적용하기](/post/note/lefthook) 포스트에서 `lint-staged` 없이 **staged**된 파일만 검사하는 방법과 **더 많은 설정**을 확인할 수 있다!
+
+## 계속 부활하는 .husky 폴더
+
+Husky 의존성 및 설정 파일을 모두 삭제했는데도 계속 `.husky` 폴더가 생기고 그 안에 `pre-commit`, `pre-push` 등 설정 파일이 추가되는 이슈가 생겼다.
+
+해당 파일을 열어보니 Lefthook을 실행하는 스크립트가 포함되어 있었다.
+
+```txt title=".husky/_/pre-commit"
+#!/bin/sh
+
+if [ "$LEFTHOOK_VERBOSE" = "1" -o "$LEFTHOOK_VERBOSE" = "true" ]; then
+  set -x
+fi
+
+if [ "$LEFTHOOK" = "0" ]; then
+  exit 0
+fi
+
+call_lefthook()
+{
+  ...
+}
+```
+
+.husky 폴더를 삭제하면 Lefthook 실행 스크립트도 사라져 Git Hooks 실행이 되지 않았다.
+
+### 문제 해결
+
+Husky 관련 설정이 전혀 없는데 계속 부활하는 게 이상해서 `Lefthook`의 **깃허브 이슈**를 살펴보니 [같은 문제를 겪은 이슈](https://github.com/evilmartians/lefthook/issues/207)가 있었다.
+
+원인은 Husky가 변경한 `hooksPath` 설정이었고 실제로 확인해 보니 hooksPath가 `.husky/_`로 설정되어 있었다.
+
+![Husky가 변경한 hooksPath](/images/husky-to-lefthook/hooks-path.png)
+
+다음 명령어로 `hooksPath`를 기본값으로 재설정한 다음 `npm install`을 해보니 더이상 .husky 폴더가 생기지 않았다!
+
+```
+git config --unset core.hooksPath // 모든 팀원이 재설정해야 함
+```
+
+## 맺으면서
+
+Husky에서 Lefthook으로의 마이그레이션으로 **Git Hooks 실행 성능을 크게 개선**할 수 있었다.
+이제는 빠르게 commit을 작성할 수 있어 앞으로 리팩토링을 진행할 때 **쾌적한 개발 환경**에서 작업할 수 있다!
+
+사실 `.husky` 폴더가 계속 생성되는 문제는 그냥 두면 Lefthook이 작동하는 데 문제없었지만, 원인이 너무 궁금해서 문제를 파악하고 해결해 봤다.
+문제를 해결하며 Git Hook이 작동하는 방식에 대해 알게 돼서 의미 있는 경험이었다.

@@ -8,10 +8,10 @@ category: setting
 
 Lefthook으로 pre-commit, pre-push, prepare-commit-msg, commit-msg 적용하기
 
-- pre-commit: commit 전에 eslint, prettier, type 검사
-- pre-push: push 전에 의존성 검사
-- prepare-commit-msg: 커밋 메시지 컨벤션 템플릿 설정
-- commit-msg: 커밋 메시지 규칙 검사
+- `pre-commit`: commit 전에 eslint, prettier, type 검사
+- `pre-push`: push 전에 의존성 검사
+- `prepare-commit-msg`: 커밋 메시지 컨벤션 템플릿 설정
+- `commit-msg`: 커밋 메시지 규칙 검사
 
 ## install
 
@@ -45,12 +45,13 @@ pre-commit:
       glob: '*.{js,ts,jsx,tsx,json,yaml,md,prettierrc}'
       run: npm run prettier {staged_files}
       stage_fixed: true
-    type-check:
-      run: npm run type-check
 pre-push:
+  parallel: true
   commands:
     audit-check:
       run: npm audit
+    type-check:
+      run: npm run type-check
 prepare-commit-msg:
   commands:
     template:
@@ -70,8 +71,9 @@ commit-msg:
 
 - `{staged_files}`: git에 스테이징 된 파일 대상으로 실행
 - `type-check`: TypeScript 타입 체크
+  - 모든 파일을 대상으로 실행해야 하므로 실행이 오래 걸릴 수 있어 `pre-push` 사용
 - `audit-check`: 보안 취약점 검사
-  - 의존성 패키지의 보안 취약점 검사를 매 커밋마다 실행하면 실행이 오래 걸릴 수 있으므로 `pre-push` 사용
+  - 의존성 패키지의 보안 취약점 검사를 매 커밋마다 실행하면 실행이 오래 걸릴 수 있어 `pre-push` 사용
 
 ## package.json
 
