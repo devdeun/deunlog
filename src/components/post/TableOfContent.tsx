@@ -15,7 +15,7 @@ const TableOfContent = ({
   const { currentSectionSlug } = useTocScroll(toc)
 
   return (
-    <ul {...props} className={cn('space-y-2.5 text-sm', className)}>
+    <ul {...props} className={cn('space-y-2.5 pr-4 text-sm', className)}>
       {toc.map((section, index) => (
         <li key={index} className="flex">
           <a

@@ -64,11 +64,7 @@ export const generateDescription = (content: string) => {
 }
 
 // Table of content
-export type TOCSectionModel = TOCSubSectionModel & {
-  subSections: TOCSubSectionModel[]
-}
-
-export type TOCSubSectionModel = {
+export type TOCSectionModel = {
   slug: string
   text: string
 }
@@ -78,16 +74,15 @@ export const parseToc = (source: string) => {
 
   return withoutCodeBlocks
     .split('\n')
-    .filter((line) => line.match(/(^#{1,3})\s/))
-    .reduce<TOCSectionModel[]>((acc, rawHeading) => {
-      const newAcc = [...acc]
+    .filter((line) => line.match(/(^#{2})\s/))
+    .map((rawHeading) => {
       const removeMdx = rawHeading
         .replace(/^##*\s/, '')
         .replace(/[*,~]{2,}/g, '')
         .replace(/(?<=\])\((.*?)\)/g, '')
         .replace(/(?<!\S)((http)(s?):\/\/|www\.).+?(?=\s)/g, '')
 
-      const section = {
+      return {
         slug: removeMdx
           .trim()
           .toLowerCase()
@@ -95,15 +90,5 @@ export const parseToc = (source: string) => {
           .replace(/\s/g, '-'),
         text: removeMdx,
       }
-
-      const isSubTitle = rawHeading.split('#').length - 1 === 3 // h3
-
-      if (acc.length && isSubTitle) {
-        newAcc.at(-1)?.subSections.push(section)
-      } else {
-        newAcc.push({ ...section, subSections: [] })
-      }
-
-      return newAcc
-    }, [])
+    })
 }
