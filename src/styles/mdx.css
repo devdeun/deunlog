@@ -113,12 +113,14 @@
   @apply mb-2;
 }
 
-.mdx > ul {
+.mdx > ul,
+.mdx > ol {
   @apply mt-6;
 }
 
 .mdx > ul,
-.mdx > ul ul {
+.mdx > ul ul,
+.mdx > ol ul {
   padding-left: 20px;
   list-style-position: outside;
   list-style-type: disc;
@@ -128,7 +130,8 @@
   @apply mb-3 mt-1 list-[circle];
 }
 
-.mdx > ul li {
+.mdx > ul li,
+.mdx > ol li {
   @apply list-item leading-7;
 }
 
@@ -142,32 +145,13 @@
 }
 
 .mdx ol {
-  --counter-space: 12px;
-  padding: 0;
-  list-style-type: none;
-  counter-reset: basics-ol;
+  padding-left: 16px;
+  list-style-position: outside;
+  list-style-type: decimal;
 }
 
-.mdx > ol li {
-  --l: calc(2 * var(--counter-space));
-  padding-left: var(--l);
-  text-indent: calc(-1 * var(--l));
-}
-
-.mdx > ol li:before {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-width: var(--counter-space);
-  margin-right: var(--counter-space);
-  font-feature-settings: 'tnum' 1;
-  line-height: normal;
-  color: var(--gray-700);
-  text-align: right;
-  letter-spacing: -0.05em;
-  content: counter(basics-ol) '. ';
-  counter-increment: basics-ol;
-  user-select: none;
+.mdx > ol > li {
+  padding-left: 4px;
 }
 
 .mdx hr {
@@ -330,6 +314,11 @@ html.dark pre.astro-code span {
   background-color: var(--shiki-dark-bg) !important;
 }
 
+html.dark pre.astro-code span.highlighted,
+html.dark pre.astro-code span.highlighted span {
+  background-color: var(--code-highlighted) !important;
+}
+
 /* shiki transformer */
 .astro-code .highlighted,
 .astro-code .diff {
@@ -339,8 +328,8 @@ html.dark pre.astro-code span {
   margin: 0 calc(-1 * var(--astro-code-px));
   transition: background-color 0.5s;
 }
-.astro-code .highlighted {
-  background-color: var(--selection);
+.astro-code span.highlighted {
+  background-color: var(--code-highlighted);
 }
 .astro-code .highlighted.error {
   background-color: var(--vp-code-line-error-color);
@@ -514,4 +503,75 @@ html.dark pre.astro-code span {
   .mdx .anchor:hover::after {
     opacity: 1;
   }
+}
+
+/* Callout */
+.mdx .callout {
+  --callout-rgb: 191, 191, 191;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(var(--callout-rgb), 0.4);
+  border-radius: 8px;
+  font-size: 15px;
+}
+.mdx .callout svg {
+  width: 16px;
+  height: 16px;
+}
+.mdx .callout[data-variant='title'] {
+  display: block;
+}
+
+.mdx .callout[data-variant='title'] > div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 1rem;
+  color: rgb(var(--callout-rgb));
+  font-weight: 500;
+  background-color: rgba(var(--callout-rgb), 0.09);
+  border-bottom: 1px solid rgba(var(--callout-rgb), 0.4);
+}
+
+.mdx .callout[data-variant='title'] > div:nth-child(2) {
+  padding: 0.6rem 1rem;
+}
+
+.mdx .callout[data-variant='inline'] {
+  color: rgb(var(--callout-rgb));
+  background-color: rgba(var(--callout-rgb), 0.09);
+}
+
+.mdx .callout[data-variant='inline'] * {
+  color: rgb(var(--callout-rgb));
+}
+
+.mdx .callout[data-variant='inline'] {
+  padding: 0.6rem 1rem;
+  color: rgb(var(--callout-rgb));
+}
+
+.mdx .callout[data-variant='inline'].note,
+.mdx .callout[data-variant='inline'].note *,
+.mdx .callout[data-variant='inline'].idea,
+.mdx .callout[data-variant='inline'].idea * {
+  color: var(--text-second);
+}
+
+.mdx :is(.callout[data-variant='inline'].note, .callout[data-variant='inline'].idea) {
+  color: var(--text-second);
+}
+
+.mdx .callout.info {
+  --callout-rgb: 8, 109, 221;
+}
+.dark .mdx .callout.info {
+  --callout-rgb: 24, 150, 251;
+}
+.mdx .callout.warning {
+  --callout-rgb: 236, 117, 0;
+}
+.mdx .callout.danger {
+  --callout-rgb: 233, 49, 71;
 }
