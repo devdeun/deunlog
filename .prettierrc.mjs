@@ -17,5 +17,11 @@ export default {
         parser: 'astro',
       },
     },
+    {
+      files: '*.mdx',
+      options: {
+        printWidth: 80,
+      },
+    },
   ],
 }
