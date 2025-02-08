@@ -16,8 +16,10 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeSlug from 'rehype-slug'
 import remarkBreaks from 'remark-breaks'
+import remarkDirective from 'remark-directive'
 
 import { transformerFragment } from './plugins/transformer-fragment'
+import { customCallout } from './src/lib/directives'
 
 export default defineConfig({
   site: 'https://deun.dev',
@@ -42,7 +44,7 @@ export default defineConfig({
           transformerFragment(),
         ],
       },
-      remarkPlugins: [remarkBreaks],
+      remarkPlugins: [remarkBreaks, remarkDirective, customCallout],
       rehypePlugins: [
         rehypeSlug,
         [
