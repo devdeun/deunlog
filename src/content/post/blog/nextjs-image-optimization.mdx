@@ -167,7 +167,7 @@ export default function Page() {
 
 `img` 태그와 달리 `next/image` 컴포넌트는 이미지 URL을 `/_next/image?url=...` 형태로 변환한다. 이 URL로 **요청이 들어오면** Next.js의 이미지 최적화 미들웨어가 동작하여 다음과 같은 결과를 반환한다.
 
-![slow 4g 환경에서 테스트한 결과](/images/nextjs-image-optimization/img-test.png)
+![slow 4g 환경에서 테스트한 결과](/images/nextjs-image-optimization/img-test.avif)
 
 네트워크 탭을 살펴보면 기본 `img` 태그의 요청은 원본 PNG 이미지(794 KB)를 그대로 전송하고 `next/image` 컴포넌트의 요청은 WebP 형식(45.7 KB)으로 **최적화되어 전송**되는 것을 확인할 수 있다.
 `next/image`의 두 번째 요청부터는 **캐시에서 즉시 응답**한다.
