@@ -21,14 +21,14 @@ const Envelopment = ({ title = '' }: Props) => {
         />
         <mask id="path-3-inside-1_466_196" fill="white">
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M200 34.8259H0V282.587H56V282C56 275.373 61.3726 270 68 270H133C139.627 270 145 275.373 145 282V282.587H200V34.8259Z"
           />
         </mask>
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M200 34.8259H0V282.587H56V282C56 275.373 61.3726 270 68 270H133C139.627 270 145 275.373 145 282V282.587H200V34.8259Z"
           className="fill-[#F2F2F2] dark:fill-[#777777]"
         />
