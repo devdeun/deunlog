@@ -43,7 +43,7 @@ pre-commit:
       stage_fixed: true
     prettier:
       glob: '*.{js,ts,jsx,tsx,json,yaml,md,prettierrc}'
-      run: npm run prettier {staged_files}
+      run: npx prettier --write {staged_files}
       stage_fixed: true
 pre-push:
   parallel: true
@@ -77,7 +77,7 @@ commit-msg:
 
 ## package.json
 
-스크립트에 prettier, type-check 추가
+스크립트에 prettier, type-check 추가 (prettier는 생략 가능)
 
 ```json title="package.json"
 {
