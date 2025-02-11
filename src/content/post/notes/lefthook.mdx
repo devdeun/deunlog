@@ -96,7 +96,7 @@ commit-msg:
 - `package.json`에 `"type": "module"` 추가
 
 ```js title=".github/scripts/copy-template.js"
-import { copyFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -104,8 +104,23 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const templatePath = join(__dirname, '..', '.gitmessage.txt')
 const targetPath = process.argv[2]
 
-copyFileSync(templatePath, targetPath)
+const existingMessage = readFileSync(targetPath, 'utf-8')
+const template = readFileSync(templatePath, 'utf-8')
+
+const hasExistingMessage = existingMessage
+  .split('\n')
+  .some((line) => line.trim() && !line.startsWith('#'))
+
+if (!hasExistingMessage) {
+  writeFileSync(targetPath, template)
+} else {
+  const typeGuide = template.split('################').pop()
+  writeFileSync(targetPath, `${existingMessage}\n${typeGuide}`)
+}
 ```
+
+- `git commit` 명령어에는 기본 템플릿을 적용
+- `git commit --amend` 명령어에는 기존 커밋 메시지 보존
 
 ## 초기화
 
