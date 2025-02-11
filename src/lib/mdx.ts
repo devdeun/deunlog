@@ -53,7 +53,9 @@ export const getPostInfoList = async (
 
 export const generateDescription = (content: string) => {
   const parsedContent = content
-    .replace(/(?<=\])\((.*?)\)/g, '')
+    .replace(/:{3}.*?:{3}/gs, '')
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
     .replace(/(?<!\S)((http)(s?):\/\/|www\.).+?(?=\s)/g, '')
     .replace(/[#*|[\]]|(-{3,})|(`{3})(\S*)(?=\s)/g, '')
     .replace(/\s+/g, ' ')
