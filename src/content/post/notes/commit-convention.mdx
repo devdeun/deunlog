@@ -105,6 +105,12 @@ git config --global commit.template /Users/(경로에 맞게 수정)/.gitmessage
 git config --global --get commit.template
 ```
 
+### 커밋 메시지가 VSCode에서 열리도록 설정 (터미널에 뜨는 경우)
+
+```
+git config --global core.editor "code --wait"
+```
+
 ## CommitLint 설정
 
 - 커밋 메시지가 규칙에 맞는지 검사하는 도구
@@ -188,7 +194,8 @@ export default {
   },
   parserPreset: {
     parserOpts: {
-      headerPattern: /^([\u{1F300}-\u{1F9FF}|[\u{2600}-\u{26FF}])\s+(.+?)(?:\s+\(#\d+\))?$/u,
+      headerPattern:
+        /^([\u{1F300}-\u{1F9FF}|[\u{2600}-\u{26FF}])\s+(.+?)(?:\s+\(#\d+\))?$/u,
       headerCorrespondence: ['type', 'subject', 'references'],
     },
   },
