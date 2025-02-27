@@ -28,7 +28,7 @@ export const SHARP_OPTIONS_TYPE_MAPPER = {
   jpeg: 'jpeg',
   webp: 'webp',
   avif: 'avif',
-  gif: 'gif',
+  gif: 'webp',
 } as const satisfies { [key: string]: SharpOptionType }
 export type SharpFileType = keyof typeof SHARP_OPTIONS_TYPE_MAPPER
 
@@ -93,7 +93,15 @@ export const sharpImages = async () => {
       const sharpOptionType = SHARP_OPTIONS_TYPE_MAPPER[fileType]
       const sharpOption = SHARP_OPTIONS[sharpOptionType]
 
-      const sharpedFilePath = filePath.replace(`.${fileType}`, `.sharp.${fileType}`)
+      const metadata = await sharp(filePath).metadata()
+      const isAnimatedWebp = fileType === 'webp' && metadata.pages && metadata.pages > 1
+
+      if (isAnimatedWebp) {
+        console.log(`::✧:: Skipping animated WebP file ${filename}`)
+        continue
+      }
+
+      const sharpedFilePath = filePath.replace(`.${fileType}`, `.sharp.${sharpOptionType}`)
 
       await sharp(filePath, fileType === 'gif' ? { animated: true } : {})
         [sharpOptionType](sharpOption)
@@ -111,14 +119,10 @@ export const sharpImages = async () => {
       }
 
       if (processedResult.percentChange > 0) {
-        await fs.writeFile(filePath, await fs.readFile(sharpedFilePath))
-
-        const avifPath = filePath.replace(`.${fileType}`, '.avif')
-        try {
-          await sharp(filePath, fileType === 'gif' ? { animated: true } : {})
-            .avif(SHARP_OPTIONS.avif)
-            .toFile(avifPath)
-
+        if (fileType !== 'gif') {
+          await fs.writeFile(filePath, await fs.readFile(sharpedFilePath))
+          const avifPath = filePath.replace(`.${fileType}`, '.avif')
+          await sharp(filePath).avif(SHARP_OPTIONS.avif).toFile(avifPath)
           const avifStats = await fs.stat(avifPath)
 
           if (avifStats.size < afterStats.size) {
@@ -132,8 +136,14 @@ export const sharpImages = async () => {
           } else {
             await unlink(avifPath)
           }
-        } catch (error) {
-          console.log('::error:: Failed to convert to AVIF:', error)
+        }
+
+        if (fileType === 'gif') {
+          const webpPath = filePath.replace('.gif', '.webp')
+          await fs.rename(sharpedFilePath, webpPath)
+          const webpFilename = path.basename(webpPath)
+          mdxUpdates += await updateMdxReferences(filename, webpFilename)
+          await unlink(filePath)
         }
 
         sharpedImageList.push(processedResult)
@@ -141,7 +151,9 @@ export const sharpImages = async () => {
         unSharpedImageList.push(processedResult)
       }
 
-      await unlink(sharpedFilePath)
+      if (fileType !== 'gif') {
+        await unlink(sharpedFilePath)
+      }
     } catch (error) {
       console.log('::error::', error)
     }
