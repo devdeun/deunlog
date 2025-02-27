@@ -35,7 +35,7 @@ export type SharpFileType = keyof typeof SHARP_OPTIONS_TYPE_MAPPER
 const CONFIG = {
   imageGlobPattern: 'public/images/**/*.{png,jpg,jpeg,webp,gif}',
   mdxGlobPattern: 'src/content/post/**/*.mdx',
-  ignoreList: ['og.png'],
+  ignoreList: ['og.png', 'thumbnails/'],
 }
 
 export type ProcessedResult = {
