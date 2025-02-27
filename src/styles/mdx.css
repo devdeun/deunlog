@@ -102,7 +102,7 @@
   font-family: var(--font-serif), sans-serif;
   font-weight: 400;
   color: var(--text-second);
-  border-left: 4px solid var(--border);
+  border-left: 4px solid var(--blockquote-border);
 }
 
 .mdx blockquote > blockquote {
