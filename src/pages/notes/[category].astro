@@ -28,7 +28,7 @@ const { postList } = Astro.props
 <BaseLayout>
   <section data-animate class="group my-14">
     <h2 class="mb-5 text-lg font-semibold">{NOTES_CATEGORIES[category]}</h2>
-    <div class="relative z-0 border-t last-of-type:border-b">
+    <div class="relative z-0 border-t border-gray-200 last-of-type:border-b">
       <ul data-animate class="py-4">
         {
           postList.map((post, index) => {
@@ -40,9 +40,11 @@ const { postList } = Astro.props
                 >
                   <div class="flex flex-1 items-start border-t py-2 group-first-of-type/item:border-t-0">
                     <div class="flex items-center gap-0.5 text-heading">
-                      <span class="mx-1 rounded-md px-1 transition">{post.title}</span>
+                      <span class="mx-1 rounded-md px-1 transition sm:text-[15px]">
+                        {post.title}
+                      </span>
                     </div>
-                    <div class="ml-auto mt-0.5 flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition">
+                    <div class="ml-auto mt-[1px] flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition sm:mt-0.5 sm:text-[13px]">
                       <time datetime={String(post.date)}>{formatDate(post.date)}</time>
                     </div>
                   </div>

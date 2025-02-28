@@ -20,8 +20,8 @@ const yearList = Object.entries(
     {
       yearList.map(([year, postList], index) => {
         return (
-          <div class="relative z-0 border-t last-of-type:border-b">
-            <h3 class="absolute top-[26px] -z-10 -mx-1.5 -my-0.5 rounded-md px-1.5 py-0.5 text-sm text-second transition">
+          <div class="relative z-0 border-t border-gray-200 last-of-type:border-b">
+            <h3 class="absolute top-[27px] -z-10 -mx-1.5 -my-0.5 rounded-md px-1.5 py-0.5 text-sm text-second transition sm:top-[28px] sm:text-[13px]">
               {year}
             </h3>
             <ul data-animate class="py-4">
@@ -32,11 +32,13 @@ const yearList = Object.entries(
                       href={post.href}
                       class="group/item flex transition-opacity hover:!opacity-100 group-hover:opacity-40"
                     >
-                      <div class="ml-[15%] flex flex-1 items-start border-t py-2 group-first-of-type/item:border-t-0">
+                      <div class="ml-[15%] flex flex-1 items-start border-t py-2 group-first-of-type/item:border-t-0 sm:ml-[36px]">
                         <div class="flex items-center gap-0.5 text-heading">
-                          <span class="mx-1 rounded-md px-1 transition">{post.title}</span>
+                          <span class="mx-1 rounded-md px-1 transition sm:text-[15px]">
+                            {post.title}
+                          </span>
                         </div>
-                        <div class="ml-auto mt-0.5 flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition">
+                        <div class="ml-auto mt-[1px] flex flex-shrink-0 items-center gap-1 rounded-md px-1 py-0.5 text-sm text-second transition sm:mt-0.5 sm:text-[13px]">
                           <time datetime={String(post.date)}>{formatDate(post.date)}</time>
                         </div>
                       </div>
