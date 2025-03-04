@@ -13,7 +13,7 @@ PretendardVariable 폰트를 사용했을 때 발생한 문제입니다.
 
 NextJS에서 Pretendard 폰트를 적용했을 때, Semibold 이상의 굵기가 **유독 굵게 렌더링 되는 문제**가 발생했다.
 
-![좌 Chrome 우 Safari](/images/pretendard-safari/weight-before.png)
+![좌 Chrome 우 Safari](/images/pretendard-safari/weight-before.avif)
 
 구글링을 통해 다음 방법으로 해결할 수 있다는 걸 알게 되었다.
 
@@ -27,7 +27,7 @@ body {
 `font-synthesis: none;`을 적용하면 **브라우저의 강제 합성을 막아** 폰트 굵기가 정상적으로 표시된다.
 하지만, 폰트에 특정 굵기(weight)나 italic 스타일이 없으면 브라우저가 합성해 주는 기능도 막혀서 **디자인이 달라질 위험**이 있다.
 
-![좌 Chrome 우 Safari](/images/pretendard-safari/italic-before.png)
+![좌 Chrome 우 Safari](/images/pretendard-safari/italic-before.avif)
 
 `font-synthesis: none;` 적용 후 italic을 테스트해 보니 Chrome과 Safari 모두에서 적용되지 않는 걸 확인할 수 있었다.
 
@@ -47,10 +47,10 @@ const pretendard = localFont({
 })
 ```
 
-![좌 Chrome 우 Safari](/images/pretendard-safari/weight-after.png)
+![좌 Chrome 우 Safari](/images/pretendard-safari/weight-after.avif)
 
 `weight` 값을 추가해 주니 Safari에서의 굵기 렌더링 이슈가 해결되었다.
 
-![좌 Chrome 우 Safari](/images/pretendard-safari/italic-after.png)
+![좌 Chrome 우 Safari](/images/pretendard-safari/italic-after.avif)
 
 italic 역시 정상적으로 적용된다.
