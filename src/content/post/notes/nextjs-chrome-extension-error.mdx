@@ -1,0 +1,32 @@
+---
+title: NextJS 크롬 익스텐션 하이드레이션 오류
+description: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used
+date: 2025-03-04
+updatedDate: 2025-03-04
+tags: [nextjs, nextjs chrome extension]
+category: nextjs
+image: ''
+---
+
+![](/images/nextjs-chrome-extension-error/chrome-extension-error.avif)
+
+> Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used
+
+크롬 익스텐션 사용으로 위와 같은 하이드레이션 오류가 발생했다.
+**크롬 익스텐션이 DOM을 변경**하여 Next.js가 서버에서 렌더링한 HTML과 클라이언트에서 렌더링 된 HTML이 일치하지 않아서 발생한 오류이다.
+
+```jsx highlight={3}
+export default function RootLayout({ children }) {
+  return (
+    <html lang="ko" suppressHydrationWarning>
+      {/* ... */}
+    </html>
+  )
+}
+```
+
+html 태그에 `suppressHydrationWarning`를 추가해 하이드레이션 불일치를 감지했을 때 **경고를 숨길 수 있다.** html 태그에만 속성을 추가했기 때문에 다른 컴포넌트에서 하이드레이션 문제가 발생한다면 경고가 표시된다.
+
+:::warning
+이 방법은 단순히 **경고를 숨기는 것**이므로 크롬 익스텐션이 아닌 **다른 원인으로 해당 오류가 발생**한다면 **정확한 원인을 찾아 해결**해야 한다.
+:::
