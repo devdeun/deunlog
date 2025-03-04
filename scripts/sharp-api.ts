@@ -35,7 +35,7 @@ export type SharpFileType = keyof typeof SHARP_OPTIONS_TYPE_MAPPER
 const CONFIG = {
   imageGlobPattern: 'public/images/**/*.{png,jpg,jpeg,webp,gif}',
   mdxGlobPattern: 'src/content/post/**/*.mdx',
-  ignoreList: ['og.png', 'thumbnails/'],
+  ignoreList: ['og.png'],
 }
 
 export type ProcessedResult = {
@@ -83,7 +83,7 @@ export const sharpImages = async () => {
     try {
       const filename = path.basename(filePath)
 
-      if (CONFIG.ignoreList.includes(filename)) {
+      if (CONFIG.ignoreList.includes(filename) || filePath.includes('thumbnails/')) {
         console.log(`::✧:: Skipping ignored file ${filename}`)
         continue
       }
