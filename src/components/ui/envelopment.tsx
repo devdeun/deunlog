@@ -67,7 +67,7 @@ const Envelopment = ({ title = '' }: Props) => {
         />
       </svg>
 
-      <h2 className="absolute inset-0 mt-10 flex items-center justify-center text-center text-gray-900 underline">
+      <h2 className="absolute inset-0 mt-10 flex items-center justify-center px-2 text-center text-gray-900 underline">
         {title}
       </h2>
     </div>

@@ -8,4 +8,5 @@ export const SITE = {
 
 export const NOTES_CATEGORIES = {
   setting: '프로젝트 세팅',
+  daangn: '당근 프론트엔드 인턴 회고',
 } as const
